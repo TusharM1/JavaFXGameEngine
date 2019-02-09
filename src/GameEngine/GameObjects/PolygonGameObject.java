@@ -1,4 +1,4 @@
-package Objects.GameObjects;
+package GameEngine.GameObjects;
 
 public class PolygonGameObject {
 }

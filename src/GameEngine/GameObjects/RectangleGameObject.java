@@ -1,9 +1,10 @@
-package Objects.GameObjects;
+package GameEngine.GameObjects;
 
+import GameEngine.GameEngine;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public abstract class RectangleGameObject extends GameObject {
+public abstract class RectangleGameObject extends GameEngine.GameObject {
 
 	Rectangle rectangle;
 	Color color;
@@ -22,8 +23,8 @@ public abstract class RectangleGameObject extends GameObject {
 
 	@Override
 	protected void drawObject(double canvasWidthCenter, double canvasHeightCenter) {
-		graphicsContext.setFill(color);
+		GameEngine.graphicsContext.setFill(color);
 //		graphicsContext.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		graphicsContext.fillRect(canvasWidthCenter - width / 2, canvasHeightCenter - height / 2, width, height);
+		GameEngine.graphicsContext.fillRect(canvasWidthCenter - width / 2, canvasHeightCenter - height / 2, width, height);
 	}
 }

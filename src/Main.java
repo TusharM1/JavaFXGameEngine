@@ -1,8 +1,10 @@
-package Game;
-
+import GameEngine.GameEngine;
+import GameEngine.IGameLoop;
 import Objects.PlayerShip;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class Main extends Application implements IGameLoop {
 
@@ -25,10 +27,12 @@ public class Main extends Application implements IGameLoop {
         gameEngine.start();
     }
 
-    @Override
-    public void drawFrame() {
-        playerShip.draw();
-    }
+	@Override
+	public void updateFrame(ArrayList<GameEngine.GameObject> renderQueue) {
+		for (GameEngine.GameObject gameObject : renderQueue) {
+			System.out.println("Hello");
+		}
+	}
 
     public static void main(String[] args) {
         launch(args);

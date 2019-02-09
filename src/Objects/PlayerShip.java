@@ -1,11 +1,13 @@
 package Objects;
 
-import Objects.GameObjects.RectangleGameObject;
+import GameEngine.GameObjects.RectangleGameObject;
 
 public class PlayerShip extends RectangleGameObject {
 
 	public PlayerShip(double locationX, double locationY, double width, double height) {
 		super(locationX, locationY, width, height);
+		velocityX = 1;
+		velocityY = 1;
 	}
 
 	@Override

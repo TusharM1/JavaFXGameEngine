@@ -1,4 +1,4 @@
-package Objects.GameObjects;
+package GameEngine.GameObjects;
 
 import javafx.scene.shape.Ellipse;
 

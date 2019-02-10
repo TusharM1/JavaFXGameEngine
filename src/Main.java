@@ -8,17 +8,26 @@ import java.util.ArrayList;
 
 public class Main extends Application implements IGameLoop {
 
-//    EllipseGameObject ellipseGameObject;
-    PlayerShip playerShip;
+	GameEngine gameEngine;
+	ArrayList<GameEngine.GameObject> renderQueue;
 
-    @Override
+	PlayerShip playerShip;
+
+	@Override
+	public void init() throws Exception {
+		super.init();
+
+		gameEngine = new GameEngine(this, 640, 480);
+		gameEngine.init();
+
+		renderQueue = gameEngine.getRenderQueue();
+	}
+
+	@Override
     public void start(Stage primaryStage) {
-        GameEngine gameEngine = new GameEngine(this, 640, 480);
-        gameEngine.init();
-        gameEngine.createKeyListener();
 
-//        ellipseGameObject = new EllipseGameObject(200, 200, 100, 100);
-        playerShip = new PlayerShip(200, 200, 100, 100);
+		playerShip = new PlayerShip(200, 200, 100, 100);
+		renderQueue.add(playerShip);
 
         primaryStage.setTitle("Asteroids Remade");
         primaryStage.setScene(gameEngine.getScene());
@@ -28,10 +37,11 @@ public class Main extends Application implements IGameLoop {
     }
 
 	@Override
-	public void updateFrame(ArrayList<GameEngine.GameObject> renderQueue) {
-		for (GameEngine.GameObject gameObject : renderQueue) {
-			System.out.println("Hello");
-		}
+	public void updateFrame() {
+//		for (GameEngine.GameObject gameObject : renderQueue) {
+//			System.out.println("Hello");
+//		}
+//		System.out.println("Working");
 	}
 
     public static void main(String[] args) {

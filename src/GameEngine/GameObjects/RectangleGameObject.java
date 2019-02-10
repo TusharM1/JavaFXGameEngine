@@ -6,10 +6,10 @@ import javafx.scene.shape.Rectangle;
 
 public abstract class RectangleGameObject extends GameEngine.GameObject {
 
-	Rectangle rectangle;
-	Color color;
+	public Rectangle rectangle;
+	public Color color;
 
-	double width, height;
+	public double width, height;
 
 	public RectangleGameObject(double locationX, double locationY, double width, double height) {
 		this.locationX = locationX;
@@ -24,7 +24,10 @@ public abstract class RectangleGameObject extends GameEngine.GameObject {
 	@Override
 	protected void drawObject(double canvasWidthCenter, double canvasHeightCenter) {
 		GameEngine.graphicsContext.setFill(color);
-//		graphicsContext.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//		GameEngine.graphicsContext.strokeRect(0, 0, GameEngine.canvas.getWidth(), GameEngine.canvas.getHeight());
+		GameEngine.graphicsContext.setFill(color.darker());
 		GameEngine.graphicsContext.fillRect(canvasWidthCenter - width / 2, canvasHeightCenter - height / 2, width, height);
+		GameEngine.graphicsContext.setFill(color.brighter());
+		GameEngine.graphicsContext.fillRect((GameEngine.canvas.getWidth() - width) / 2, (GameEngine.canvas.getHeight() - height) / 2, width, 10);
 	}
 }

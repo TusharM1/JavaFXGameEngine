@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 public class GameEngine {
 
-	IGameLoop game;
+	public IGameLoop game;
 
-	int width;
-	int height;
+	public static int width;
+	public static int height;
 
-	boolean[] keyboard;
+	public static boolean[] keyboard;
 
 	public static Canvas canvas;
 	public static GraphicsContext graphicsContext;
@@ -34,7 +34,10 @@ public class GameEngine {
 		this.width = width;
 		this.height = height;
 
+		gameLoop = new GameLoop();
 		renderQueue = new ArrayList<>();
+
+		keyboard = new boolean[65536];
 	}
 
 	public void init() {
@@ -47,8 +50,6 @@ public class GameEngine {
 
 		scene = new Scene(new Group(canvas));
 
-		gameLoop = new GameLoop();
-
 		scene.widthProperty().addListener((observable, oldValue, newValue) -> {
 			width = newValue.intValue();
 			canvas.setWidth(width);
@@ -57,15 +58,16 @@ public class GameEngine {
 			height = newValue.intValue();
 			canvas.setHeight(height);
 		});
-	}
 
-	public void createKeyListener() {
-		keyboard = new boolean[65536];
 		scene.addEventHandler(KeyEvent.ANY, event -> keyboard[event.getCode().getCode()] = event.getEventType().getName().equals("KEY_PRESSED"));
 	}
 
 	public Scene getScene() {
 		return scene;
+	}
+
+	public ArrayList<GameObject> getRenderQueue() {
+		return renderQueue;
 	}
 
 	public void start() {
@@ -83,7 +85,7 @@ public class GameEngine {
 				gameObject.update();
 
 			// logic
-			game.updateFrame(renderQueue);
+			game.updateFrame();
 
 			// draw
 			for (GameObject gameObject : renderQueue)
@@ -94,8 +96,8 @@ public class GameEngine {
 	public static abstract class GameObject {
 
 		public double rotation, rotationSpeed;
-		public double accelerationX, accelerationY;
-		public double velocityX, velocityY;
+		public double acceleration, accelerationX, accelerationY, friction;
+		public double velocity, velocityX, velocityY, maximumVelocity;
 		public double locationX, locationY;
 		public double mass;
 
@@ -107,8 +109,18 @@ public class GameEngine {
 
 		public void update() {
 			rotation += rotationSpeed;
+
+//			velocity = Math.max(Math.min(Math.abs(Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2))) + acceleration - friction, maximumVelocity), 0);
+
+//			velocityX = velocity * Math.sin(Math.toRadians(rotation));
+//			velocityY = -velocity * Math.cos(Math.toRadians(rotation));
+
+			accelerationX = acceleration * Math.sin(Math.toRadians(rotation));
+			accelerationY = -acceleration * Math.cos(Math.toRadians(rotation));
+
 			velocityX += accelerationX;
 			velocityY += accelerationY;
+
 			locationX += velocityX;
 			locationY += velocityY;
 		}
@@ -130,6 +142,18 @@ public class GameEngine {
 		}
 
 		abstract protected void drawObject(double canvasWidthCenter, double canvasHeightCenter);
+
+		@Override
+		public String toString() {
+			return "Location X: " + locationX + "\n" +
+					"Location Y: " + locationY + "\n" +
+					"Velocity X: " + velocityX + "\n" +
+					"Velocity Y: " + velocityY + "\n" +
+					"Acceleration X: " + accelerationX + "\n" +
+					"Acceleration Y: " + accelerationY + "\n" +
+					"Rotation: " + rotation + "\n" +
+					"Rotation Speed: " + rotationSpeed + "\n";
+		}
 
 //		public double getRotation() { return rotation; }
 //		public void setRotation(double rotation) { this.rotation = rotation; }

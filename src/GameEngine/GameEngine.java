@@ -110,16 +110,26 @@ public class GameEngine {
 		public void update() {
 			rotation += rotationSpeed;
 
-//			velocity = Math.max(Math.min(Math.abs(Math.sqrt(Math.pow(velocityX, 2) + Math.pow(velocityY, 2))) + acceleration - friction, maximumVelocity), 0);
-
-//			velocityX = velocity * Math.sin(Math.toRadians(rotation));
-//			velocityY = -velocity * Math.cos(Math.toRadians(rotation));
-
 			accelerationX = acceleration * Math.sin(Math.toRadians(rotation));
 			accelerationY = -acceleration * Math.cos(Math.toRadians(rotation));
 
 			velocityX += accelerationX;
 			velocityY += accelerationY;
+
+			velocity = Math.hypot(velocityX, velocityY);
+
+			double frictionX = -friction * velocityX / velocity;
+			double frictionY = -friction * velocityY / velocity;
+
+			if (Math.abs(velocityX) > Math.abs(frictionX))
+				velocityX += frictionX;
+			else
+				velocityX = 0;
+
+			if (Math.abs(velocityY) > Math.abs(frictionY))
+				velocityY += frictionY;
+			else
+				velocityY = 0;
 
 			locationX += velocityX;
 			locationY += velocityY;

@@ -27,6 +27,8 @@ public class PlayerShip extends RectangleGameObject {
 		if (GameEngine.keyboard[KeyCode.SPACE.getCode()]) {
 			locationX = GameEngine.width / 2.0;
 			locationY = GameEngine.height / 2.0;
+			velocityX = velocityY = 0;
+			rotation = 0;
 		}
 
 		super.update();

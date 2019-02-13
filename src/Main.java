@@ -1,8 +1,6 @@
 import GameEngine.GameEngine;
 import GameEngine.IGameLoop;
-import Objects.FloatingBall;
-import Objects.GravityTriangle;
-import Objects.SpaceShip;
+import Objects.Starfish;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -15,7 +13,7 @@ public class Main extends Application implements IGameLoop {
 
 //	SpaceShip spaceShip;
 //	FloatingBall floatingBall;
-	GravityTriangle gravityTriangle;
+	Starfish starfish;
 
 	@Override
 	public void init() throws Exception {
@@ -32,8 +30,8 @@ public class Main extends Application implements IGameLoop {
 
 //		spaceShip = new SpaceShip(200, 200, 100, 100);
 //		floatingBall = new FloatingBall(200, 200, 100, 100);
-		gravityTriangle = new GravityTriangle(200, 200, new double[][]{{0, -50}, {25, 25}, {-25, 25}}, 0, 0);
-		renderQueue.add(gravityTriangle);
+		starfish = new Starfish(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, 0);
+		renderQueue.add(starfish);
 //		renderQueue.add(floatingBall);
 //		renderQueue.add(spaceShip);
 

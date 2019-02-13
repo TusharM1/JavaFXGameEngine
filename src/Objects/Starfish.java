@@ -5,9 +5,9 @@ import GameEngine.GameObjects.PolygonGameObject;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-public class GravityTriangle extends PolygonGameObject {
+public class Starfish extends PolygonGameObject {
 
-	public GravityTriangle(double locationX, double locationY, double[][] points, double centerX, double centerY) {
+	public Starfish(double locationX, double locationY, double[][] points, double centerX, double centerY) {
 		super(locationX, locationY, points, centerX, centerY);
 		color = Color.valueOf("#2FA9FFFF");
 

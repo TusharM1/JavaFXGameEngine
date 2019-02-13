@@ -25,8 +25,8 @@ public abstract class RectangleGameObject extends GameEngine.GameObject {
 		GameEngine.graphicsContext.setFill(color);
 //		GameEngine.graphicsContext.strokeRect(0, 0, GameEngine.canvas.getWidth(), GameEngine.canvas.getHeight());
 		GameEngine.graphicsContext.setFill(color.darker());
-		GameEngine.graphicsContext.fillRect(canvasWidthCenter - width / 2, canvasHeightCenter - height / 2, width, height);
+		GameEngine.graphicsContext.fillRect(-width / 2, -height / 2, width, height);
 		GameEngine.graphicsContext.setFill(color.brighter());
-		GameEngine.graphicsContext.fillRect((GameEngine.canvas.getWidth() - width) / 2, (GameEngine.canvas.getHeight() - height) / 2, width, 10);
+		GameEngine.graphicsContext.fillRect(-width / 2, -height / 2, width, 10);
 	}
 }

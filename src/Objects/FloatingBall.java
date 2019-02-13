@@ -14,8 +14,8 @@ public class FloatingBall extends EllipseGameObject {
 		maximumVelocity = 5;
 		friction = .02;
 
-		this.locationX = GameEngine.width / 2.0;
-		this.locationY = GameEngine.height / 2.0;
+//		this.locationX = GameEngine.width / 2.0;
+//		this.locationY = GameEngine.height / 2.0;
 	}
 
 	@Override

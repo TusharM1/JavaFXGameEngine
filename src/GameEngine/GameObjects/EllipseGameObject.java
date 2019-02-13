@@ -23,11 +23,11 @@ public class EllipseGameObject extends GameEngine.GameObject {
 	@Override
 	protected void drawObject(double canvasWidthCenter, double canvasHeightCenter) {
 		GameEngine.graphicsContext.setFill(color);
-//		GameEngine.graphicsContext.strokeRect(0, 0, GameEngine.canvas.getWidth(), GameEngine.canvas.getHeight());
+		GameEngine.graphicsContext.strokeRect(0, 0, GameEngine.canvas.getWidth(), GameEngine.canvas.getHeight());
 		GameEngine.graphicsContext.setFill(color.darker());
-		GameEngine.graphicsContext.fillOval(canvasWidthCenter - radiusX, canvasHeightCenter - radiusY, 2 * radiusX, 2 * radiusY);
+		GameEngine.graphicsContext.fillOval(-radiusX, -radiusY, 2 * radiusX, 2 * radiusY);
 		GameEngine.graphicsContext.setFill(color.brighter());
-		GameEngine.graphicsContext.fillOval(canvasWidthCenter - radiusX + 5, canvasHeightCenter - radiusY + 5, 2 * radiusX - 10, 2 * radiusY - 10);
+		GameEngine.graphicsContext.fillOval(-radiusX + 5, -radiusY + 5, 2 * radiusX - 10, 2 * radiusY - 10);
 
 	}
 }

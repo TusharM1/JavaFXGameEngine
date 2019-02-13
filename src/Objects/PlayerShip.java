@@ -13,8 +13,8 @@ public class PlayerShip extends RectangleGameObject {
 		color = Color.valueOf("#2FA9FFFF");
 
 		maximumVelocity = 5;
+		friction = .02;
 
-		friction = .05;
 		this.locationX = GameEngine.width / 2.0;
 		this.locationY = GameEngine.height / 2.0;
 	}

@@ -95,15 +95,15 @@ public class GameEngine {
 
 	public static abstract class GameObject {
 
-		public double rotation, rotationSpeed;
-		public double acceleration, accelerationX, accelerationY, friction;
-		public double velocity, velocityX, velocityY, maximumVelocity;
-		public double locationX, locationY;
-		public double mass;
+		public double rotation, rotationSpeed,
+				acceleration, accelerationX, accelerationY, friction,
+				velocity, velocityX, velocityY, maximumVelocity,
+				locationX, locationY,
+				mass;
 
 		public boolean isVisible;
 
-		public GameObject () {
+		public GameObject() {
 			isVisible = true;
 		}
 
@@ -130,6 +130,14 @@ public class GameEngine {
 				velocityY += frictionY;
 			else
 				velocityY = 0;
+
+			double maximumVelocityX = maximumVelocity * velocityX / velocity;
+			double maximumVelocityY = maximumVelocity * velocityY / velocity;
+
+			if (Math.abs(velocityX) > Math.abs(maximumVelocityX))
+				velocityX = maximumVelocityX;
+			if (Math.abs(velocityY) > Math.abs(maximumVelocityY))
+				velocityY = maximumVelocityY;
 
 			locationX += velocityX;
 			locationY += velocityY;

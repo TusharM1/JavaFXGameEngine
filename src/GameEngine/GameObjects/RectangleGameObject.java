@@ -18,7 +18,6 @@ public abstract class RectangleGameObject extends GameEngine.GameObject {
 		this.height = height;
 		rectangle = new Rectangle(this.locationX, this.locationY, width, height);
 		color = new Color(1,1,1,1);
-		// x,y,w,h,r,c,v
 	}
 
 	@Override

@@ -110,9 +110,6 @@ public class GameEngine {
 		public void update() {
 			rotation += rotationSpeed;
 
-			accelerationX = acceleration * Math.sin(Math.toRadians(rotation));
-			accelerationY = -acceleration * Math.cos(Math.toRadians(rotation));
-
 			velocityX += accelerationX;
 			velocityY += accelerationY;
 

@@ -148,6 +148,7 @@ public class GameEngine {
 				double canvasWidthCenter = canvasWidth / 2, canvasHeightCenter = canvasHeight / 2;
 
 				graphicsContext.translate(locationX - canvasWidthCenter, locationY - canvasHeightCenter);
+				// TODO change center of rotation from middle to top left
 				graphicsContext.transform(new Affine(new Rotate(rotation, canvasWidthCenter, canvasHeightCenter)));
 
 				drawObject(canvasWidthCenter, canvasHeightCenter);

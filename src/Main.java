@@ -1,6 +1,7 @@
 import GameEngine.GameEngine;
 import GameEngine.IGameLoop;
 import Objects.FloatingBall;
+import Objects.GravityTriangle;
 import Objects.SpaceShip;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -13,7 +14,8 @@ public class Main extends Application implements IGameLoop {
 	ArrayList<GameEngine.GameObject> renderQueue;
 
 //	SpaceShip spaceShip;
-	FloatingBall floatingBall;
+//	FloatingBall floatingBall;
+	GravityTriangle gravityTriangle;
 
 	@Override
 	public void init() throws Exception {
@@ -29,8 +31,10 @@ public class Main extends Application implements IGameLoop {
     public void start(Stage primaryStage) {
 
 //		spaceShip = new SpaceShip(200, 200, 100, 100);
-		floatingBall = new FloatingBall(200, 200, 100, 100);
-		renderQueue.add(floatingBall);
+//		floatingBall = new FloatingBall(200, 200, 100, 100);
+		gravityTriangle = new GravityTriangle(200, 200, new double[][]{{0, -50}, {25, 25}, {-25, 25}}, 0, 0);
+		renderQueue.add(gravityTriangle);
+//		renderQueue.add(floatingBall);
 //		renderQueue.add(spaceShip);
 
         primaryStage.setTitle("Asteroids Remade");

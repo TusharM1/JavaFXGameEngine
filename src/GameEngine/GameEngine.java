@@ -1,11 +1,13 @@
 package GameEngine;
 
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
@@ -20,6 +22,7 @@ public class GameEngine {
 	public static int height;
 
 	public static boolean[] keyboard;
+	public static MouseEvent mouse;
 
 	public static Canvas canvas;
 	public static GraphicsContext graphicsContext;
@@ -60,6 +63,7 @@ public class GameEngine {
 		});
 
 		scene.addEventHandler(KeyEvent.ANY, event -> keyboard[event.getCode().getCode()] = event.getEventType().getName().equals("KEY_PRESSED"));
+		scene.addEventHandler(MouseEvent.ANY, event -> mouse = event);
 	}
 
 	public Scene getScene() {
@@ -108,34 +112,39 @@ public class GameEngine {
 		}
 
 		public void update() {
-			// TODO clean up this code
-			rotation += rotationSpeed;
+			// Use rectangular bounding box for polygons to check if possibly intersecting, then use more advanced check for polygons
+			// break down concave polygons into convex polygons and evaluate each collision separately using separating axis theorem
+			rotation = (rotation + rotationSpeed + 360) % 360;
 
 			velocityX += accelerationX;
 			velocityY += accelerationY;
 
-			velocity = Math.hypot(velocityX, velocityY);
+			if (friction > 0) {
+				velocity = Math.hypot(velocityX, velocityY);
 
-			double frictionX = -friction * velocityX / velocity;
-			double frictionY = -friction * velocityY / velocity;
+				double frictionX = -friction * velocityX / velocity;
+				double frictionY = -friction * velocityY / velocity;
 
-			if (Math.abs(velocityX) > Math.abs(frictionX))
-				velocityX += frictionX;
-			else
-				velocityX = 0;
+				if (Math.abs(velocityX) > Math.abs(frictionX))
+					velocityX += frictionX;
+				else
+					velocityX = 0;
 
-			if (Math.abs(velocityY) > Math.abs(frictionY))
-				velocityY += frictionY;
-			else
-				velocityY = 0;
+				if (Math.abs(velocityY) > Math.abs(frictionY))
+					velocityY += frictionY;
+				else
+					velocityY = 0;
+			}
 
-			double maximumVelocityX = maximumVelocity * velocityX / velocity;
-			double maximumVelocityY = maximumVelocity * velocityY / velocity;
+			if (maximumVelocity > 0) {
+				double maximumVelocityX = maximumVelocity * velocityX / velocity;
+				double maximumVelocityY = maximumVelocity * velocityY / velocity;
 
-			if (Math.abs(velocityX) > Math.abs(maximumVelocityX))
-				velocityX = maximumVelocityX;
-			if (Math.abs(velocityY) > Math.abs(maximumVelocityY))
-				velocityY = maximumVelocityY;
+				if (Math.abs(velocityX) > Math.abs(maximumVelocityX))
+					velocityX = maximumVelocityX;
+				if (Math.abs(velocityY) > Math.abs(maximumVelocityY))
+					velocityY = maximumVelocityY;
+			}
 
 			locationX += velocityX;
 			locationY += velocityY;
@@ -144,20 +153,12 @@ public class GameEngine {
 		public final void draw() {
 			if (isVisible) {
 				graphicsContext.save();
-
-				double canvasWidth = canvas.getWidth(), canvasHeight = canvas.getHeight();
-				double canvasWidthCenter = canvasWidth / 2, canvasHeightCenter = canvasHeight / 2;
-
-				graphicsContext.translate(locationX, locationY);
-				graphicsContext.transform(new Affine(new Rotate(rotation)));
-
-				drawObject(canvasWidthCenter, canvasHeightCenter);
-
+				drawObject();
 				graphicsContext.restore();
 			}
 		}
 
-		abstract protected void drawObject(double canvasWidthCenter, double canvasHeightCenter);
+		abstract protected void drawObject();
 
 		@Override
 		public String toString() {

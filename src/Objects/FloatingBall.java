@@ -23,6 +23,9 @@ public class FloatingBall extends EllipseGameObject {
 		accelerationX = (GameEngine.keyboard[KeyCode.RIGHT.getCode()] ? .1 : 0) + (GameEngine.keyboard[KeyCode.LEFT.getCode()] ? -.1 : 0);
 		accelerationY = (GameEngine.keyboard[KeyCode.UP.getCode()] ? -.1 : 0) + (GameEngine.keyboard[KeyCode.DOWN.getCode()] ? .1 : 0);
 
+//		velocityX = (GameEngine.keyboard[KeyCode.RIGHT.getCode()] ? 5 : 0) + (GameEngine.keyboard[KeyCode.LEFT.getCode()] ? -5 : 0);
+//		velocityY = (GameEngine.keyboard[KeyCode.UP.getCode()] ? -5 : 0) + (GameEngine.keyboard[KeyCode.DOWN.getCode()] ? 5 : 0);
+
 		if (GameEngine.keyboard[KeyCode.SPACE.getCode()]) {
 			locationX = GameEngine.width / 2.0;
 			locationY = GameEngine.height / 2.0;
@@ -32,4 +35,5 @@ public class FloatingBall extends EllipseGameObject {
 
 		super.update();
 	}
+
 }

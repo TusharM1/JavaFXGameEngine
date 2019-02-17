@@ -26,6 +26,10 @@ public class SpaceShip extends RectangleGameObject {
 		accelerationX = acceleration * Math.sin(Math.toRadians(rotation));
 		accelerationY = -acceleration * Math.cos(Math.toRadians(rotation));
 
+//		velocity = (GameEngine.keyboard[KeyCode.UP.getCode()] ? 5 : 0) + (GameEngine.keyboard[KeyCode.DOWN.getCode()] ? -5 : 0);
+//		velocityX = velocity * Math.sin(Math.toRadians(rotation));
+//		velocityY = -velocity * Math.cos(Math.toRadians(rotation));
+
 		if (GameEngine.keyboard[KeyCode.SPACE.getCode()]) {
 			locationX = GameEngine.width / 2.0;
 			locationY = GameEngine.height / 2.0;

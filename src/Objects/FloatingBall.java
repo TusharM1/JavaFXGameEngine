@@ -27,8 +27,8 @@ public class FloatingBall extends EllipseGameObject {
 //		velocityY = (GameEngine.keyboard[KeyCode.UP.getCode()] ? -5 : 0) + (GameEngine.keyboard[KeyCode.DOWN.getCode()] ? 5 : 0);
 
 		if (GameEngine.keyboard[KeyCode.SPACE.getCode()]) {
-			locationX = GameEngine.width / 2.0;
-			locationY = GameEngine.height / 2.0;
+			locationX = GameEngine.width / 2.0 - radiusX;
+			locationY = GameEngine.height / 2.0 - radiusY;
 			velocityX = velocityY = 0;
 			rotation = 0;
 		}

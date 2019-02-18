@@ -1,22 +1,20 @@
 package GameEngine;
 
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Affine;
-import javafx.scene.transform.Rotate;
 
 import java.util.ArrayList;
 
 public class GameEngine {
 
-	public IGameLoop game;
+	public static IGameLoop game;
 
 	public static int width;
 	public static int height;
@@ -28,6 +26,7 @@ public class GameEngine {
 	public static GraphicsContext graphicsContext;
 
 	Scene scene;
+	Group group;
 	GameLoop gameLoop;
 
 	ArrayList<GameObject> renderQueue;
@@ -51,7 +50,8 @@ public class GameEngine {
 			e.printStackTrace();
 		}
 
-		scene = new Scene(new Group(canvas));
+		group = new Group(canvas);
+		scene = new Scene(group);
 
 		scene.widthProperty().addListener((observable, oldValue, newValue) -> {
 			width = newValue.intValue();
@@ -68,6 +68,10 @@ public class GameEngine {
 
 	public Scene getScene() {
 		return scene;
+	}
+
+	public Group getGroup() {
+		return group;
 	}
 
 	public ArrayList<GameObject> getRenderQueue() {
@@ -97,6 +101,7 @@ public class GameEngine {
 		}
 	}
 
+	// TODO convert this class into an interface
 	public static abstract class GameObject {
 
 		public double rotation, rotationSpeed,
@@ -156,9 +161,14 @@ public class GameEngine {
 				drawObject();
 				graphicsContext.restore();
 			}
+			graphicsContext.setFill(Color.BLACK);
+			graphicsContext.fillRect(width / 2 - 1, 0, 2, height);
+			graphicsContext.fillRect(0, height / 2 - 1, width, 2);
 		}
 
-		abstract protected void drawObject();
+		protected abstract void drawObject();
+
+		public abstract Node getNode();
 
 		@Override
 		public String toString() {

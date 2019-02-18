@@ -2,6 +2,10 @@ import GameEngine.GameEngine;
 import GameEngine.IGameLoop;
 import Objects.*; // Do not remove until testing is over
 import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -28,9 +32,10 @@ public class Main extends Application implements IGameLoop {
 //		renderQueue.add(new SpaceShip(0, 0, 100, 100));
 //		renderQueue.add(new FloatingBall(200, 200, 50, 50));
 //		renderQueue.add(new FloatingBall(0, 0, 50, 50));
-//		renderQueue.add(new Starfish(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, 0));
-		renderQueue.add(new Starfish(0, 0, new double[][]{{0, -50}, {50, 0}, {0, 50}, {-50, 0}}, 0, 0));
-//		renderQueue.add(new GravityBall(200, 200, 100, 100));
+		renderQueue.add(new Starfish(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, -75));
+//		renderQueue.add(new Starfish(0, 0, new double[][]{{0, -75}, {25, 25}, {0, 15}, {-25, 25}}, 0, 25));
+//		renderQueue.add(new Starfish(0, 0, new double[][]{{0, -50}, {50, 0}, {0, 50}, {-50, 0}}, 0, 0));
+//		renderQueue.add(new GravityBall(200, 200, 50, 50));
 //		renderQueue.add(new DragSquare(200, 200, 100, 100));
 
         primaryStage.setTitle("Asteroids Remade");
@@ -40,12 +45,15 @@ public class Main extends Application implements IGameLoop {
         gameEngine.start();
     }
 
+    Group subGroup;
+
 	@Override
 	public void updateFrame() {
-//		for (GameEngine.GameObject gameObject : renderQueue) {
-//			System.out.println("Hello");
-//		}
-//		System.out.println("Working");
+//		Group group = gameEngine.getGroup();
+//		subGroup = new Group();
+//		for (GameEngine.GameObject gameObject : renderQueue)
+//			subGroup.getChildren().add(gameObject.getNode());
+//		group.getChildren().add(subGroup);
 	}
 
     public static void main(String[] args) {

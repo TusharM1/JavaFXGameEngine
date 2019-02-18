@@ -1,6 +1,7 @@
 package GameEngine.GameObjects;
 
 import GameEngine.GameEngine;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.transform.Affine;
@@ -42,11 +43,17 @@ public class EllipseGameObject extends GameEngine.GameObject {
 	protected void drawObject() {
 		GameEngine.graphicsContext.setFill(color);
 //		GameEngine.graphicsContext.strokeRect(0, 0, GameEngine.canvas.getWidth(), GameEngine.canvas.getHeight());
-		GameEngine.graphicsContext.setFill(color.darker());
 		GameEngine.graphicsContext.transform(new Affine(new Rotate(rotation, centerX, centerY)));
+
+		GameEngine.graphicsContext.setFill(color.darker());
 		GameEngine.graphicsContext.fillOval(locationX, locationY,  diameterX,  diameterY);
 
 		GameEngine.graphicsContext.setFill(color.brighter());
 		GameEngine.graphicsContext.fillOval(locationX + 5, locationY + 5, diameterX - 10, diameterY - 10);
+	}
+
+	@Override
+	public Node getNode() {
+		return ellipse;
 	}
 }

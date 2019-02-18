@@ -1,13 +1,15 @@
 package GameEngine.GameObjects;
 
 import GameEngine.GameEngine;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 
-public abstract class RectangleGameObject extends GameEngine.GameObject {
+public class RectangleGameObject extends GameEngine.GameObject {
 
+	// Consider changing this rectangle to a polygon to improve the hit box
 	public Rectangle rectangle;
 	public Color color;
 
@@ -35,16 +37,21 @@ public abstract class RectangleGameObject extends GameEngine.GameObject {
 	}
 
 	@Override
+	public Node getNode() {
+		return rectangle;
+	}
+
+	@Override
 	protected void drawObject() {
 		GameEngine.graphicsContext.setFill(color);
 ////		GameEngine.graphicsContext.strokeRect(0, 0, GameEngine.canvas.getWidth(), GameEngine.canvas.getHeight());
 		GameEngine.graphicsContext.transform(new Affine(new Rotate(rotation, locationX + widthCenter, locationY + heightCenter)));
+
 		GameEngine.graphicsContext.setFill(color.darker());
 		GameEngine.graphicsContext.fillRect(locationX, locationY, width, height);
 
 		GameEngine.graphicsContext.setFill(color.brighter());
 		GameEngine.graphicsContext.fillRect(locationX, locationY, width, 10);
 	}
-
 
 }

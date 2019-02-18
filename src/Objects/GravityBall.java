@@ -14,9 +14,6 @@ public class GravityBall extends EllipseGameObject {
 
 		maximumVelocity = 20;
 		friction = .01;
-
-		this.locationX = GameEngine.width / 2.0;
-		this.locationY = GameEngine.height / 4.0;
 	}
 
 	@Override
@@ -27,8 +24,8 @@ public class GravityBall extends EllipseGameObject {
 //		if (GameEngine.mouse.isPrimaryButtonDown() && GameEngine.mouse.)
 
 		if (GameEngine.keyboard[KeyCode.SPACE.getCode()]) {
-			locationX = GameEngine.width / 2.0;
-			locationY = GameEngine.height / 4.0;
+			locationX = GameEngine.width / 2.0 - radiusX;
+			locationY = GameEngine.height / 4.0 - radiusY;
 			velocityX = velocityY = 0;
 			rotation = 0;
 		}

@@ -1,18 +1,18 @@
 package Objects;
 
 import GameEngine.GameEngine;
-import GameEngine.GameObjects.RectangleGameObject;
+import GameEngine.GameObjects.PolygonGameObject;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 
-public class DragSquare extends RectangleGameObject {
+public class DragStar extends PolygonGameObject {
 
-	public DragSquare(double locationX, double locationY, double width, double height) {
-		super(locationX, locationY, width, height);
-		color = Color.valueOf("#FFa500FF");
+	public DragStar(double locationX, double locationY, double[][] points, double centerX, double centerY) {
+		super(locationX, locationY, points, centerX, centerY);
+		color = Color.valueOf("#2FA9FFFF");
 	}
 
 	double cursorInShapeX, cursorInShapeY;
@@ -24,7 +24,7 @@ public class DragSquare extends RectangleGameObject {
 
 		MouseEvent mouseEvent;
 		if ((mouseEvent = GameEngine.mouse) != null) {
-			if (((Path) Shape.intersect(GameEngine.mouseHitBox, rectangle)).getElements().size() > 0 && mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+			if (((Path) Shape.intersect(GameEngine.mouseHitBox, polygon)).getElements().size() > 0 && mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
 				cursorInShapeX = mouseEvent.getX() - locationX;
 				cursorInShapeY = mouseEvent.getY() - locationY;
 				selectedState = true;
@@ -39,4 +39,5 @@ public class DragSquare extends RectangleGameObject {
 
 		super.update();
 	}
+
 }

@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class GameEngine {
 
 	public static boolean[] keyboard;
 	public static MouseEvent mouse;
+	public static Rectangle mouseHitBox;
 
 	public static Canvas canvas;
 	public static GraphicsContext graphicsContext;
@@ -40,6 +42,7 @@ public class GameEngine {
 		renderQueue = new ArrayList<>();
 
 		keyboard = new boolean[65536];
+		mouseHitBox = new Rectangle(1, 1);
 	}
 
 	public void init() {
@@ -63,7 +66,13 @@ public class GameEngine {
 		});
 
 		scene.addEventHandler(KeyEvent.ANY, event -> keyboard[event.getCode().getCode()] = event.getEventType().getName().equals("KEY_PRESSED"));
-		scene.addEventHandler(MouseEvent.ANY, event -> mouse = event);
+		scene.addEventHandler(MouseEvent.ANY, event -> {
+			mouse = event;
+			mouseHitBox.setX(event.getX());
+			mouseHitBox.setY(event.getY());
+		});
+
+		group.getChildren().add(mouseHitBox);
 	}
 
 	public Scene getScene() {
@@ -161,9 +170,9 @@ public class GameEngine {
 				drawObject();
 				graphicsContext.restore();
 			}
-			graphicsContext.setFill(Color.BLACK);
-			graphicsContext.fillRect(width / 2 - 1, 0, 2, height);
-			graphicsContext.fillRect(0, height / 2 - 1, width, 2);
+//			graphicsContext.setFill(Color.BLACK);
+//			graphicsContext.fillRect(width / 2 - 1, 0, 2, height);
+//			graphicsContext.fillRect(0, height / 2 - 1, width, 2);
 		}
 
 		protected abstract void drawObject();

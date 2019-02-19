@@ -32,11 +32,12 @@ public class Main extends Application implements IGameLoop {
 //		renderQueue.add(new SpaceShip(0, 0, 100, 100));
 //		renderQueue.add(new FloatingBall(200, 200, 50, 50));
 //		renderQueue.add(new FloatingBall(0, 0, 50, 50));
-		renderQueue.add(new Starfish(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, -75));
+//		renderQueue.add(new Starfish(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, -75));
 //		renderQueue.add(new Starfish(0, 0, new double[][]{{0, -75}, {25, 25}, {0, 15}, {-25, 25}}, 0, 25));
 //		renderQueue.add(new Starfish(0, 0, new double[][]{{0, -50}, {50, 0}, {0, 50}, {-50, 0}}, 0, 0));
 //		renderQueue.add(new GravityBall(200, 200, 50, 50));
 //		renderQueue.add(new DragSquare(200, 200, 100, 100));
+		renderQueue.add(new DragStar(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, -75));
 
         primaryStage.setTitle("Asteroids Remade");
         primaryStage.setScene(gameEngine.getScene());

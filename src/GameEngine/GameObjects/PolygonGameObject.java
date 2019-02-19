@@ -23,6 +23,10 @@ public class PolygonGameObject extends GameEngine.GameObject {
 	public Translate shapeTranslation;
 	public Rotate shapeRotation;
 
+	// Possibly only have Polygon, Ellipse, Image and maybe Path Game Objects. Try making the rectangle Game Object into a polygon
+	// Also try adding translation and rotation transformations to the original polygon points and remove the extra translation and rotation code.
+	// But how did the collision detection work for rotated objects in the old code? figure this out.
+
 	public PolygonGameObject(double locationX, double locationY, double[][] points, double centerX, double centerY) {
 		this.locationX = locationX;
 		this.locationY = locationY;
@@ -55,8 +59,6 @@ public class PolygonGameObject extends GameEngine.GameObject {
 
 		translate.transform2DPoints(allPoints, 0, allPoints, 0, numberOfPoints);
 		rotate.transform2DPoints(allPoints, 0, allPoints, 0, numberOfPoints);
-
-		System.out.println(polygon);
 
 		for (int i = 0; i < allPoints.length; i += 2)
 			xPoints[i / 2] = allPoints[i];

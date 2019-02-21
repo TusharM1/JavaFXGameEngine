@@ -10,13 +10,15 @@ import javafx.scene.shape.Shape;
 
 public class DragSquare extends RectangleGameObject {
 
+	double cursorInShapeX, cursorInShapeY;
+	boolean selectedState;
+
 	public DragSquare(double locationX, double locationY, double width, double height) {
 		super(locationX, locationY, width, height);
 		color = Color.valueOf("#FFa500FF");
-	}
 
-	double cursorInShapeX, cursorInShapeY;
-	boolean selectedState;
+		name = "DragSquare";
+	}
 
 	@Override
 	public void update() {
@@ -27,6 +29,7 @@ public class DragSquare extends RectangleGameObject {
 			if (((Path) Shape.intersect(GameEngine.mouseHitBox, rectangle)).getElements().size() > 0 && mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
 				cursorInShapeX = mouseEvent.getX() - locationX;
 				cursorInShapeY = mouseEvent.getY() - locationY;
+				GameEngine.moveToFront(this);
 				selectedState = true;
 			}
 			if (selectedState && mouseEvent.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {

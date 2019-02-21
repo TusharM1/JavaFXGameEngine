@@ -2,7 +2,6 @@ package GameEngine;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 
@@ -27,11 +27,11 @@ public class GameEngine {
 	public static Canvas canvas;
 	public static GraphicsContext graphicsContext;
 
+	public static ArrayList<GameObject> renderQueue;
+
 	Scene scene;
 	Group group;
 	GameLoop gameLoop;
-
-	ArrayList<GameObject> renderQueue;
 
 	public GameEngine(IGameLoop game, int width, int height) {
 		this.game = game;
@@ -72,7 +72,7 @@ public class GameEngine {
 			mouseHitBox.setY(event.getY());
 		});
 
-		group.getChildren().add(mouseHitBox);
+//		group.getChildren().add(mouseHitBox);
 	}
 
 	public Scene getScene() {
@@ -91,6 +91,11 @@ public class GameEngine {
 		gameLoop.start();
 	}
 
+	public static void moveToFront(GameObject gameObject) {
+		renderQueue.remove(gameObject);
+		renderQueue.add(gameObject);
+	}
+
 	private class GameLoop extends AnimationTimer {
 		@Override
 		public void handle(long now) {
@@ -98,8 +103,8 @@ public class GameEngine {
 			graphicsContext.fillRect(0, 0, width, height);
 
 			// update
-			for (GameObject gameObject : renderQueue)
-				gameObject.update();
+			for (int i = 0; i < renderQueue.size(); i++)
+				renderQueue.get(i).update();
 
 			// logic
 			game.updateFrame();
@@ -111,6 +116,7 @@ public class GameEngine {
 	}
 
 	// TODO convert this class into an interface
+	// TODO convert all public fields into getters and setters.
 	public static abstract class GameObject {
 
 		public double rotation, rotationSpeed,
@@ -119,10 +125,14 @@ public class GameEngine {
 				locationX, locationY,
 				mass;
 
+		public String name, type;
+
 		public boolean isVisible;
 
 		public GameObject() {
 			isVisible = true;
+			name = "Untitled";
+			type = "GameObject";
 		}
 
 		public void update() {
@@ -177,18 +187,20 @@ public class GameEngine {
 
 		protected abstract void drawObject();
 
-		public abstract Node getNode();
+		public abstract Shape getHitBox();
 
 		@Override
 		public String toString() {
-			return "Location X: " + locationX + "\n" +
-					"Location Y: " + locationY + "\n" +
-					"Velocity X: " + velocityX + "\n" +
-					"Velocity Y: " + velocityY + "\n" +
-					"Acceleration X: " + accelerationX + "\n" +
-					"Acceleration Y: " + accelerationY + "\n" +
-					"Rotation: " + rotation + "\n" +
-					"Rotation Speed: " + rotationSpeed + "\n";
+//			return "Location X: " + locationX + "\n" +
+//					"Location Y: " + locationY + "\n" +
+//					"Velocity X: " + velocityX + "\n" +
+//					"Velocity Y: " + velocityY + "\n" +
+//					"Acceleration X: " + accelerationX + "\n" +
+//					"Acceleration Y: " + accelerationY + "\n" +
+//					"Rotation: " + rotation + "\n" +
+//					"Rotation Speed: " + rotationSpeed + "\n";
+			return String.format("[%s: %s]", name, type);
+//			return super.toString();
 		}
 
 //		public double getRotation() { return rotation; }

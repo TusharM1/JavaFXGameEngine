@@ -1,9 +1,9 @@
 package GameEngine.GameObjects;
 
 import GameEngine.GameEngine;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 
@@ -25,6 +25,8 @@ public class RectangleGameObject extends GameEngine.GameObject {
 
 		widthCenter = width / 2;
 		heightCenter = height / 2;
+
+		this.type = "RectangleGameObject";
 	}
 
 	@Override
@@ -37,7 +39,7 @@ public class RectangleGameObject extends GameEngine.GameObject {
 	}
 
 	@Override
-	public Node getNode() {
+	public Shape getHitBox() {
 		return rectangle;
 	}
 

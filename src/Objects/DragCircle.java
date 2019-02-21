@@ -1,23 +1,23 @@
 package Objects;
 
 import GameEngine.GameEngine;
-import GameEngine.GameObjects.PolygonGameObject;
+import GameEngine.GameObjects.EllipseGameObject;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 
-public class DragStar extends PolygonGameObject {
+public class DragCircle extends EllipseGameObject {
 
 	double cursorInShapeX, cursorInShapeY;
 	boolean selectedState;
 
-	public DragStar(double locationX, double locationY, double[][] points, double centerX, double centerY) {
-		super(locationX, locationY, points, centerX, centerY);
-		color = Color.valueOf("#2FA9FFFF");
+	public DragCircle(double centerX, double centerY, double radiusX, double radiusY) {
+		super(centerX, centerY, radiusX, radiusY);
+		color = Color.valueOf("#FFa500FF");
 
-		name = "DragStar";
+		name = "DragCircle";
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class DragStar extends PolygonGameObject {
 
 		MouseEvent mouseEvent;
 		if ((mouseEvent = GameEngine.mouse) != null) {
-			if (((Path) Shape.intersect(GameEngine.mouseHitBox, polygon)).getElements().size() > 0 && mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+			if (((Path) Shape.intersect(GameEngine.mouseHitBox, ellipse)).getElements().size() > 0 && mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
 				cursorInShapeX = mouseEvent.getX() - locationX;
 				cursorInShapeY = mouseEvent.getY() - locationY;
 				GameEngine.moveToFront(this);
@@ -42,5 +42,4 @@ public class DragStar extends PolygonGameObject {
 
 		super.update();
 	}
-
 }

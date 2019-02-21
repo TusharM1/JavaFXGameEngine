@@ -1,11 +1,8 @@
 import GameEngine.GameEngine;
 import GameEngine.IGameLoop;
-import Objects.*; // Do not remove until testing is over
+import Objects.*;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;

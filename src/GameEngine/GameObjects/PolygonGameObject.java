@@ -1,9 +1,9 @@
 package GameEngine.GameObjects;
 
 import GameEngine.GameEngine;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
@@ -44,6 +44,8 @@ public class PolygonGameObject extends GameEngine.GameObject {
 		shapeRotation = new Rotate(rotation, centerX, centerY);
 		polygon.getTransforms().addAll(shapeTranslation, shapeRotation);
 		color = new Color(1,1,1,1);
+
+		this.type = "PolygonGameObject";
 	}
 
 	@Override
@@ -79,7 +81,8 @@ public class PolygonGameObject extends GameEngine.GameObject {
 	}
 
 	@Override
-	public Node getNode() {
+	public Shape getHitBox() {
 		return polygon;
 	}
+
 }

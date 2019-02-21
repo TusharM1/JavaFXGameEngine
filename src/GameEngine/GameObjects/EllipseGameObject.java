@@ -4,6 +4,7 @@ import GameEngine.GameEngine;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 
@@ -25,6 +26,8 @@ public class EllipseGameObject extends GameEngine.GameObject {
 		this.locationY = centerY - radiusY;
 		ellipse = new Ellipse(centerX, centerY, radiusX, radiusY);
 		color = new Color(1,1,1,1);
+
+		this.type = "EllipseGameObject";
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class EllipseGameObject extends GameEngine.GameObject {
 	}
 
 	@Override
-	public Node getNode() {
+	public Shape getHitBox() {
 		return ellipse;
 	}
 }

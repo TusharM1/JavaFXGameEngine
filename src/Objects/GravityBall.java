@@ -9,26 +9,26 @@ public class GravityBall extends EllipseGameObject {
 
 	public GravityBall(double centerX, double centerY, double radiusX, double radiusY) {
 		super(centerX, centerY, radiusX, radiusY);
-
-		color = Color.valueOf("#2FA9FFFF");
-
-		maximumVelocity = 20;
-		friction = .01;
+//
+//		color = Color.valueOf("#2FA9FFFF");
+//
+//		maximumVelocity = 20;
+//		friction = .01;
 	}
 
 	@Override
 	public void update() {
-		accelerationX = (GameEngine.keyboard[KeyCode.RIGHT.getCode()] ? .1 : 0) + (GameEngine.keyboard[KeyCode.LEFT.getCode()] ? -.1 : 0);
-		accelerationY = .25;
-
-//		if (GameEngine.mouse.isPrimaryButtonDown() && GameEngine.mouse.)
-
-		if (GameEngine.keyboard[KeyCode.SPACE.getCode()]) {
-			locationX = GameEngine.width / 2.0 - radiusX;
-			locationY = GameEngine.height / 4.0 - radiusY;
-			velocityX = velocityY = 0;
-			rotation = 0;
-		}
+//		accelerationX = (GameEngine.keyboard[KeyCode.RIGHT.getCode()] ? .1 : 0) + (GameEngine.keyboard[KeyCode.LEFT.getCode()] ? -.1 : 0);
+//		accelerationY = .25;
+//
+////		if (GameEngine.mouse.isPrimaryButtonDown() && GameEngine.mouse.)
+//
+//		if (GameEngine.keyboard[KeyCode.SPACE.getCode()]) {
+//			locationX = GameEngine.width / 2.0 - radiusX;
+//			locationY = GameEngine.height / 4.0 - radiusY;
+//			velocityX = velocityY = 0;
+//			rotation = 0;
+//		}
 
 		super.update();
 	}

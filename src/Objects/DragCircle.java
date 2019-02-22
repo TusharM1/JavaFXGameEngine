@@ -1,6 +1,5 @@
 package Objects;
 
-import GameEngine.GameEngine;
 import GameEngine.GameObjects.EllipseGameObject;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -15,27 +14,24 @@ public class DragCircle extends EllipseGameObject {
 
 	public DragCircle(double centerX, double centerY, double radiusX, double radiusY) {
 		super(centerX, centerY, radiusX, radiusY);
-		color = Color.valueOf("#FFa500FF");
-
-		name = "DragCircle";
+		setColor(Color.valueOf("#FFa500FF"));
+		setObjectName("DragCircle");
 	}
 
 	@Override
 	public void update() {
-		rotationSpeed = (GameEngine.keyboard[KeyCode.LEFT.getCode()] ? -2 : 0) + (GameEngine.keyboard[KeyCode.RIGHT.getCode()] ? 2 : 0);
+		setRotationSpeed((getGameEngine().getKeyboard()[KeyCode.LEFT.getCode()] ? -2 : 0) + (getGameEngine().getKeyboard()[KeyCode.RIGHT.getCode()] ? 2 : 0));
 
 		MouseEvent mouseEvent;
-		if ((mouseEvent = GameEngine.mouse) != null) {
-			if (((Path) Shape.intersect(GameEngine.mouseHitBox, ellipse)).getElements().size() > 0 && mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-				cursorInShapeX = mouseEvent.getX() - locationX;
-				cursorInShapeY = mouseEvent.getY() - locationY;
-				GameEngine.moveToFront(this);
+		if ((mouseEvent = getGameEngine().getMouse()) != null) {
+			if (((Path) Shape.intersect(getGameEngine().getMouseHitBox(), getHitBox())).getElements().size() > 0 && mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+				cursorInShapeX = mouseEvent.getX() - getLocationX();
+				cursorInShapeY = mouseEvent.getY() - getLocationY();
+				getGameEngine().moveToFront(this);
 				selectedState = true;
 			}
-			if (selectedState && mouseEvent.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
-				locationX = mouseEvent.getX() - cursorInShapeX;
-				locationY = mouseEvent.getY() - cursorInShapeY;
-			}
+			if (selectedState && mouseEvent.getEventType().equals(MouseEvent.MOUSE_DRAGGED))
+				setLocation(mouseEvent.getX() - cursorInShapeX, mouseEvent.getY() - cursorInShapeY);
 			if (!mouseEvent.isPrimaryButtonDown())
 				selectedState = false;
 		}

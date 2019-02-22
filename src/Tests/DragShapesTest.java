@@ -1,11 +1,14 @@
 package Tests;
 
 import GameEngine.GameEngine;
+import GameEngine.GameObjects.GameObject;
 import GameEngine.IGameLoop;
 import Objects.DragCircle;
 import Objects.DragSquare;
 import Objects.DragStar;
 import javafx.application.Application;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 public class DragShapesTest extends Application implements IGameLoop {
 
 	GameEngine gameEngine;
-	ArrayList<GameEngine.GameObject> renderQueue;
+	ArrayList<GameObject> renderQueue;
 
 	@Override
 	public void init() throws Exception {
@@ -50,13 +53,13 @@ public class DragShapesTest extends Application implements IGameLoop {
 
 	@Override
 	public void updateFrame() {
-//		for (int i = 0; i < renderQueue.size(); i++) {
-//			for (int j = i + 1; j < renderQueue.size(); j++) {
-//				if (((Path) Shape.intersect(renderQueue.get(i).getHitBox(), renderQueue.get(j).getHitBox())).getElements().size() > 0) {
-//					System.out.println("Collision");
-//				}
-//			}
-//		}
+		for (int i = 0; i < renderQueue.size(); i++) {
+			for (int j = i + 1; j < renderQueue.size(); j++) {
+				if (((Path) Shape.intersect(renderQueue.get(i).getHitBox(), renderQueue.get(j).getHitBox())).getElements().size() > 0) {
+					System.out.println("Collision");
+				}
+			}
+		}
 //		if(((Path) Shape.intersect(dragSquare.rectangle, dragStar.polygon)).getElements().size() > 0)
 //			System.out.println("Collision");
 

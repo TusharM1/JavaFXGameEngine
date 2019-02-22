@@ -1,62 +1,100 @@
 package GameEngine.GameObjects;
 
-import GameEngine.GameEngine;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Shape;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 
-public class EllipseGameObject extends GameEngine.GameObject {
+public class EllipseGameObject extends GameObject {
 
-	public Ellipse ellipse;
-	public Color color;
+	private Ellipse hitBox;
+	private Color color;
 
-	public double centerX, centerY, radiusX, radiusY, diameterX, diameterY;
+	private double centerX, centerY,
+					radiusX, radiusY,
+					diameterX, diameterY;
 
 	public EllipseGameObject(double centerX, double centerY, double radiusX, double radiusY) {
-		this.centerX = centerX;
-		this.centerY = centerY;
-		this.radiusX = radiusX;
-		this.radiusY = radiusY;
-		this.diameterX = 2 * radiusX;
-		this.diameterY = 2 * radiusY;
-		this.locationX = centerX - radiusX;
-		this.locationY = centerY - radiusY;
-		ellipse = new Ellipse(centerX, centerY, radiusX, radiusY);
-		color = new Color(1,1,1,1);
-
-		this.type = "EllipseGameObject";
+		setCenter(centerX, centerY);
+		setRadius(radiusX, radiusY);
+		setLocation(centerX - radiusX, centerY - radiusY);
+		setHitBox(new Ellipse(centerX, centerY, radiusX, radiusY));
+		setColor(Color.WHITE);
+		setObjectType("EllipseGameObject");
 	}
 
 	@Override
 	public void update() {
 		super.update();
 
-		centerX = locationX + radiusX;
-		centerY = locationY + radiusY;
+		setCenter(getLocationX() + radiusX, getLocationY() + radiusY);
 
-		ellipse.setCenterX(centerX);
-		ellipse.setCenterY(centerY);
-		ellipse.setRotate(rotation);
+		getHitBox().setCenterX(centerX);
+		getHitBox().setCenterY(centerY);
+		getHitBox().setRotate(getRotation());
 	}
 
 	@Override
 	protected void drawObject() {
-		GameEngine.graphicsContext.setFill(color);
-//		GameEngine.graphicsContext.strokeRect(0, 0, GameEngine.canvas.getWidth(), GameEngine.canvas.getHeight());
-		GameEngine.graphicsContext.transform(new Affine(new Rotate(rotation, centerX, centerY)));
+		getGraphicsContext().setFill(color);
+		getGraphicsContext().transform(new Affine(new Rotate(getRotation(), centerX, centerY)));
 
-		GameEngine.graphicsContext.setFill(color.darker());
-		GameEngine.graphicsContext.fillOval(locationX, locationY,  diameterX,  diameterY);
+		getGraphicsContext().setFill(color.darker());
+		getGraphicsContext().fillOval(getLocationX(), getLocationY(),  diameterX,  diameterY);
 
-		GameEngine.graphicsContext.setFill(color.brighter());
-		GameEngine.graphicsContext.fillOval(locationX + 5, locationY + 5, diameterX - 10, diameterY - 10);
+		getGraphicsContext().setFill(color.brighter());
+		getGraphicsContext().fillOval(getLocationX() + 5, getLocationY() + 5, diameterX - 10, diameterY - 10);
 	}
 
 	@Override
-	public Shape getHitBox() {
-		return ellipse;
+	public Ellipse getHitBox() { return hitBox; }
+	public void setHitBox(Ellipse hitBox) { this.hitBox = hitBox; }
+
+	public Color getColor() { return color; }
+	public void setColor(Color color) { this.color = color; }
+
+	public double getCenterX() { return centerX; }
+	public void setCenterX(double centerX) { this.centerX = centerX; }
+	public double getCenterY() { return centerY; }
+	public void setCenterY(double centerY) { this.centerY = centerY; }
+	public void setCenter(double centerX, double centerY) {
+		this.centerX = centerX;
+		this.centerY = centerY;
 	}
+
+	public double getRadiusX() { return radiusX; }
+	public void setRadiusX(double radiusX) {
+		this.radiusX = radiusX;
+		this.diameterX = 2 * radiusX;
+	}
+	public double getRadiusY() { return radiusY; }
+	public void setRadiusY(double radiusY) {
+		this.radiusY = radiusY;
+		this.diameterY = 2 * radiusY;
+	}
+	public void setRadius(double radiusX, double radiusY) {
+		this.radiusX = radiusX;
+		this.radiusY = radiusY;
+		this.diameterX = 2 * radiusX;
+		this.diameterY = 2 * radiusY;
+	}
+	public void setRadius(double radius) { this.radiusX = this.radiusY = radius; }
+
+	public double getDiameterX() { return diameterX; }
+	public void setDiameterX(double diameterX) {
+		this.diameterX = diameterX;
+		this.radiusX = diameterX / 2;
+	}
+	public double getDiameterY() { return diameterY; }
+	public void setDiameterY(double diameterY) {
+		this.diameterY = diameterY;
+		this.radiusY = diameterY / 2;
+	}
+	public void setDiameter(double diameterX, double diameterY) {
+		this.diameterX = diameterX;
+		this.diameterY = diameterY;
+		this.radiusX = diameterX / 2;
+		this.radiusY = diameterY / 2;
+	}
+	public void setDiameter(double diameter) { this.diameterX = this.diameterY = diameter; }
 }

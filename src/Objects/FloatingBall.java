@@ -9,28 +9,23 @@ public class FloatingBall extends EllipseGameObject {
 
 	public FloatingBall(double centerX, double centerY, double radiusX, double radiusY) {
 		super(centerX, centerY, radiusX, radiusY);
-		color = Color.valueOf("#2FA9FFFF");
-
-		maximumVelocity = 5;
-		friction = .02;
-
-//		this.locationX = GameEngine.width / 2.0;
-//		this.locationY = GameEngine.height / 2.0;
+		setColor(Color.valueOf("#2FA9FFFF"));
+		setMaximumVelocity(5);
+		setFriction(0.02);
 	}
 
 	@Override
 	public void update() {
-		accelerationX = (GameEngine.keyboard[KeyCode.RIGHT.getCode()] ? .1 : 0) + (GameEngine.keyboard[KeyCode.LEFT.getCode()] ? -.1 : 0);
-		accelerationY = (GameEngine.keyboard[KeyCode.UP.getCode()] ? -.1 : 0) + (GameEngine.keyboard[KeyCode.DOWN.getCode()] ? .1 : 0);
+		setAcceleration((getGameEngine().getKeyboard()[KeyCode.RIGHT.getCode()] ? .1 : 0) + (getGameEngine().getKeyboard()[KeyCode.LEFT.getCode()] ? -.1 : 0),
+				(getGameEngine().getKeyboard()[KeyCode.UP.getCode()] ? -.1 : 0) + (getGameEngine().getKeyboard()[KeyCode.DOWN.getCode()] ? .1 : 0));
 
-//		velocityX = (GameEngine.keyboard[KeyCode.RIGHT.getCode()] ? 5 : 0) + (GameEngine.keyboard[KeyCode.LEFT.getCode()] ? -5 : 0);
-//		velocityY = (GameEngine.keyboard[KeyCode.UP.getCode()] ? -5 : 0) + (GameEngine.keyboard[KeyCode.DOWN.getCode()] ? 5 : 0);
+//		velocityX = (getGameEngine().getKeyboard()[KeyCode.RIGHT.getCode()] ? 5 : 0) + (getGameEngine().getKeyboard()[KeyCode.LEFT.getCode()] ? -5 : 0);
+//		velocityY = (getGameEngine().getKeyboard()[KeyCode.UP.getCode()] ? -5 : 0) + (getGameEngine().getKeyboard()[KeyCode.DOWN.getCode()] ? 5 : 0);
 
-		if (GameEngine.keyboard[KeyCode.SPACE.getCode()]) {
-			locationX = GameEngine.width / 2.0 - radiusX;
-			locationY = GameEngine.height / 2.0 - radiusY;
-			velocityX = velocityY = 0;
-			rotation = 0;
+		if (getGameEngine().getKeyboard()[KeyCode.SPACE.getCode()]) {
+			setLocation(getGameEngine().getWidth() / 2.0 - getRadiusX(), getGameEngine().getHeight() / 2.0 - getRadiusY());
+			setVelocity(0);
+			setRotation(0);
 		}
 
 		super.update();

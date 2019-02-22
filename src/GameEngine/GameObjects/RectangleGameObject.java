@@ -1,59 +1,66 @@
 package GameEngine.GameObjects;
 
-import GameEngine.GameEngine;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 
-public class RectangleGameObject extends GameEngine.GameObject {
+public class RectangleGameObject extends GameObject {
 
-	// Consider changing this rectangle to a polygon to improve the hit box
-	public Rectangle rectangle;
-	public Color color;
+	// Consider changing this rectangle to keep consistency with other types of Game Objects
+	private Rectangle hitBox;
+	private Color color;
 
-	public double width, height, widthCenter, heightCenter;
+	private double width, height,
+					widthCenter, heightCenter;
 
 	public RectangleGameObject(double locationX, double locationY, double width, double height) {
-		this.locationX = locationX;
-		this.locationY = locationY;
-		this.width = width;
-		this.height = height;
-		rectangle = new Rectangle(this.locationX, this.locationY, width, height);
-		color = new Color(1,1,1,1);
-
-		widthCenter = width / 2;
-		heightCenter = height / 2;
-
-		this.type = "RectangleGameObject";
+		setLocation(locationX, locationY);
+		setSize(width, height);
+		setHitBox(new Rectangle(locationX, locationY, width, height));
+		setColor(Color.WHITE);
+		setObjectType("RectangleGameObject");
 	}
 
 	@Override
 	public void update() {
 		super.update();
 
-		rectangle.setX(locationX);
-		rectangle.setY(locationY);
-		rectangle.setRotate(rotation);
-	}
-
-	@Override
-	public Shape getHitBox() {
-		return rectangle;
+		getHitBox().setX(getLocationX());
+		getHitBox().setY(getLocationY());
+		getHitBox().setRotate(getRotation());
 	}
 
 	@Override
 	protected void drawObject() {
-		GameEngine.graphicsContext.setFill(color);
-////		GameEngine.graphicsContext.strokeRect(0, 0, GameEngine.canvas.getWidth(), GameEngine.canvas.getHeight());
-		GameEngine.graphicsContext.transform(new Affine(new Rotate(rotation, locationX + widthCenter, locationY + heightCenter)));
+		getGraphicsContext().setFill(color);
+		getGraphicsContext().transform(new Affine(new Rotate(getRotation(), getLocationX() + widthCenter, getLocationY() + heightCenter)));
 
-		GameEngine.graphicsContext.setFill(color.darker());
-		GameEngine.graphicsContext.fillRect(locationX, locationY, width, height);
+		getGraphicsContext().setFill(color.darker());
+		getGraphicsContext().fillRect(getLocationX(), getLocationY(), getWidth(), getHeight());
 
-		GameEngine.graphicsContext.setFill(color.brighter());
-		GameEngine.graphicsContext.fillRect(locationX, locationY, width, 10);
+		getGraphicsContext().setFill(color.brighter());
+		getGraphicsContext().fillRect(getLocationX(), getLocationY(), getWidth(), 10);
 	}
+
+	@Override
+	public Rectangle getHitBox() { return hitBox; }
+	public void setHitBox(Rectangle hitBox) { this.hitBox = hitBox; }
+
+	public Color getColor() { return color; }
+	public void setColor(Color color) { this.color = color; }
+
+	public double getWidth() { return width; }
+	public void setWidth(double width) { this.width = width; }
+	public double getHeight() { return height; }
+	public void setHeight(double height) { this.height = height; }
+	public void setSize(double width, double height) {
+		this.width = width;
+		this.height = height;
+		this.widthCenter = width / 2;
+		this.heightCenter = height / 2;
+	}
+	public double getWidthCenter() { return widthCenter; }
+	public double getHeightCenter() { return heightCenter; }
 
 }

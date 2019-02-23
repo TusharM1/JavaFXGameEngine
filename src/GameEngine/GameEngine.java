@@ -17,8 +17,8 @@ public class GameEngine {
 
 	private IGameLoop game;
 
-	private int width;
-	private int height;
+	private double width;
+	private double height;
 
 	private Canvas canvas;
 	private GraphicsContext graphicsContext;
@@ -34,7 +34,7 @@ public class GameEngine {
 	private MouseEvent mouse;
 	private Rectangle mouseHitBox;
 
-	public GameEngine(IGameLoop game, int width, int height) {
+	public GameEngine(IGameLoop game, double width, double height) {
 		this.game = game;
 		this.width = width;
 		this.height = height;
@@ -44,9 +44,7 @@ public class GameEngine {
 
 		keyboard = new boolean[65536];
 		mouseHitBox = new Rectangle(1, 1);
-	}
 
-	public void init() {
 		try {
 			canvas = new Canvas(width, height);
 			graphicsContext = canvas.getGraphicsContext2D();
@@ -58,12 +56,12 @@ public class GameEngine {
 		scene = new Scene(group);
 
 		scene.widthProperty().addListener((observable, oldValue, newValue) -> {
-			width = newValue.intValue();
-			canvas.setWidth(width);
+			this.width = newValue.doubleValue();
+			canvas.setWidth(this.width);
 		});
 		scene.heightProperty().addListener((observable, oldValue, newValue) -> {
-			height = newValue.intValue();
-			canvas.setHeight(height);
+			this.height = newValue.doubleValue();
+			canvas.setHeight(this.height);
 		});
 
 		scene.addEventHandler(KeyEvent.ANY, event -> keyboard[event.getCode().getCode()] = event.getEventType().getName().equals("KEY_PRESSED"));
@@ -74,31 +72,6 @@ public class GameEngine {
 		});
 
 		GameObject.setGameEngine(this);
-	}
-
-	public Scene getScene() {
-		return scene;
-	}
-
-	public Group getGroup() {
-		return group;
-	}
-
-	public void start() {
-		gameLoop.start();
-	}
-
-	public void moveToFront(GameObject gameObject) {
-		renderQueue.remove(gameObject);
-		renderQueue.add(gameObject);
-	}
-
-	public ArrayList<GameObject> getRenderQueue() {
-		return renderQueue;
-	}
-
-	public GraphicsContext getGraphicsContext() {
-		return graphicsContext;
 	}
 
 	private class GameLoop extends AnimationTimer {
@@ -118,83 +91,51 @@ public class GameEngine {
 		}
 	}
 
-	public IGameLoop getGame() {
-		return game;
+	public void start() { gameLoop.start(); }
+
+	public void moveToFront(GameObject gameObject) {
+		renderQueue.remove(gameObject);
+		renderQueue.add(gameObject);
 	}
 
-	public void setGame(IGameLoop game) {
-		this.game = game;
-	}
+	public IGameLoop getGame() { return game; }
+	public void setGame(IGameLoop game) { this.game = game; }
 
-	public int getWidth() {
-		return width;
-	}
+	public double getWidth() { return width; }
+	public void setWidth(double width) { this.width = width; }
+	public double getHeight() { return height; }
+	public void setHeight(double height) { this.height = height; }
+	public void setSize(double width, double height) { this.width = width; this.height = height; }
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
+	public Canvas getCanvas() { return canvas; }
+	public void setCanvas(Canvas canvas) { this.canvas = canvas; this.graphicsContext = canvas.getGraphicsContext2D(); }
 
-	public int getHeight() {
-		return height;
-	}
+	public GraphicsContext getGraphicsContext() { return graphicsContext; }
+	public void setGraphicsContext(GraphicsContext graphicsContext) { this.graphicsContext = graphicsContext; this.canvas = graphicsContext.getCanvas(); }
 
-	public void setHeight(int height) {
-		this.height = height;
+	public Scene getScene() {
+		return scene;
 	}
+	public void setScene(Scene scene) { this.scene = scene; }
 
-	public Canvas getCanvas() {
-		return canvas;
+	public Group getGroup() {
+		return group;
 	}
+	public void setGroup(Group group) { this.group = group; }
 
-	public void setCanvas(Canvas canvas) {
-		this.canvas = canvas;
-	}
+	public GameLoop getGameLoop() { return gameLoop; }
+	public void setGameLoop(GameLoop gameLoop) { this.gameLoop = gameLoop; }
 
-	public void setGraphicsContext(GraphicsContext graphicsContext) {
-		this.graphicsContext = graphicsContext;
-	}
+	public ArrayList<GameObject> getRenderQueue() { return renderQueue; }
+	public void setRenderQueue(ArrayList<GameObject> renderQueue) { this.renderQueue = renderQueue; }
 
-	public void setScene(Scene scene) {
-		this.scene = scene;
-	}
+	public boolean[] getKeyboard() { return keyboard; }
+	public void setKeyboard(boolean[] keyboard) { this.keyboard = keyboard; }
 
-	public void setGroup(Group group) {
-		this.group = group;
-	}
+	public MouseEvent getMouse() { return mouse; }
+	public void setMouse(MouseEvent mouse) { this.mouse = mouse; }
 
-	public GameLoop getGameLoop() {
-		return gameLoop;
-	}
+	public Rectangle getMouseHitBox() { return mouseHitBox; }
+	public void setMouseHitBox(Rectangle mouseHitBox) { this.mouseHitBox = mouseHitBox; }
 
-	public void setGameLoop(GameLoop gameLoop) {
-		this.gameLoop = gameLoop;
-	}
-
-	public void setRenderQueue(ArrayList<GameObject> renderQueue) {
-		this.renderQueue = renderQueue;
-	}
-
-	public boolean[] getKeyboard() {
-		return keyboard;
-	}
-
-	public void setKeyboard(boolean[] keyboard) {
-		this.keyboard = keyboard;
-	}
-
-	public MouseEvent getMouse() {
-		return mouse;
-	}
-
-	public void setMouse(MouseEvent mouse) {
-		this.mouse = mouse;
-	}
-
-	public Rectangle getMouseHitBox() {
-		return mouseHitBox;
-	}
-
-	public void setMouseHitBox(Rectangle mouseHitBox) {
-		this.mouseHitBox = mouseHitBox;
-	}
 }

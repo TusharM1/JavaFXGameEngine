@@ -23,7 +23,6 @@ public class DragShapesTest extends Application implements IGameLoop {
 		super.init();
 
 		gameEngine = new GameEngine(this, 640, 480);
-		gameEngine.init();
 
 		renderQueue = gameEngine.getRenderQueue();
 	}

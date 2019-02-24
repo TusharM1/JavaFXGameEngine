@@ -22,6 +22,7 @@ public class DragCircle extends EllipseGameObject {
 	public void update() {
 		setRotationSpeed((getGameEngine().getKeyboard()[KeyCode.LEFT.getCode()] ? -2 : 0) + (getGameEngine().getKeyboard()[KeyCode.RIGHT.getCode()] ? 2 : 0));
 
+		// TODO Move this into the Game Object Class
 		MouseEvent mouseEvent;
 		if ((mouseEvent = getGameEngine().getMouse()) != null) {
 			if (((Path) Shape.intersect(getGameEngine().getMouseHitBox(), getHitBox())).getElements().size() > 0 && mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {

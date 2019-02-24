@@ -7,31 +7,13 @@ import javafx.scene.shape.Shape;
 
 // TODO convert this class into an interface
 // TODO comment all of this code at some point
-// TODO add support for linear velocity and acceleration
 
 // Possibly only have Polygon, Ellipse, Image and maybe Path Game Objects. Try making the rectangle Game Object into a polygon
 // Also try adding translation and rotation transformations to the original polygon points and remove the extra translation and rotation code.
-// But how did the collision detection work for rotated objects in the old code? figure this out.
 
 public abstract class GameObject {
 
-	private String objectName, objectType;
-
-	// Add implementation for: acceleration, friction, velocity, maximumVelocityX, and maximumVelocityY
-//	private double rotation, rotationSpeed, accelerationAngle,
-//			acceleration, accelerationX, accelerationY,
-//			friction, frictionX, frictionY,
-//			velocity, velocityX, velocityY,
-//			maximumVelocity, maximumVelocityX, maximumVelocityY,
-//			locationX, locationY, mass;
-
-//			acceleration, accelerationX, accelerationY,
-//			friction, frictionX, frictionY,
-//			velocity, velocityX, velocityY,
-//			maximumVelocity, maximumVelocityX, maximumVelocityY,
-//			 mass;
-
-	private boolean isVisible;
+	//---------------------------- Fields ----------------------------//
 
 	private static GameEngine gameEngine;
 
@@ -40,66 +22,64 @@ public abstract class GameObject {
 	Vector2D maximumVelocity;
 	Vector2D velocity;
 
-	private double locationX, locationY,
-			rotation, rotationSpeed;
+	private String objectName, objectType;
+
+	private double locationX, locationY, rotation, rotationSpeed, mass;
+	private boolean isVisible;
+
+	//---------------------------- Constructor ----------------------------//
 
 	public GameObject() {
-		isVisible = true;
-
+		// Initialize Vectors
 		acceleration = new Vector2D();
 		friction = new Vector2D();
 		maximumVelocity = new Vector2D();
 		velocity = new Vector2D();
+
+		// Set default Text
+		objectName = "Object";
+		objectType = "GameObject";
+
+		// Move Object to Center of Canvas
+		locationX = gameEngine.getWidth() / 2;
+		locationY = gameEngine.getHeight() / 2;
+
+		// Set Default Values of Fields
+		rotation = 0;
+		rotationSpeed = 0;
+
+		isVisible = true;
 	}
 
+	//---------------------------- Update Object ----------------------------//
+
 	public void update() {
-//		setVelocity(velocity + acceleration);
+		// Updates Rotation
 		rotation += rotationSpeed;
 
-		System.out.println(velocity + " " + friction);
-
+		// Updates Rotation of Vectors
 		friction.setAngle(velocity.getAngle() + 180);
 		maximumVelocity.setAngle(velocity.getAngle());
 
+		// Updates Velocity
 		velocity.add(acceleration);
-//		friction.changeSign(-velocity.getMagnitude());
 
-//		System.out.println(friction);
-//		System.out.println(rotation + 180);
-
-//		System.out.println(velocity.getAngle() + " " + friction.getAngle());
-
+		// Adds Friction to Velocity (Friction must be positive)
 		if (Math.abs(velocity.getMagnitude()) > Math.abs(friction.getMagnitude()))
-//			System.out.println(velocity.getAngle());
 			velocity.add(friction);
 		else
 			velocity.setMagnitude(0);
-//
 
+		// Caps Velocity to Max Velocity
 		if (Math.abs(velocity.getMagnitude()) > Math.abs(maximumVelocity.getMagnitude()))
 			velocity.setMagnitude(maximumVelocity.getMagnitude());
 
-//		System.out.println(friction);
+		// Updates Location based on Velocity
 		adjustLocation(velocity);
-
-//		if (friction > 0) {
-//			setFriction(friction);
-//			if (Math.abs(velocity) > Math.abs(friction))
-//				setVelocity(velocity - friction);
-//			else
-//				setVelocity(0);
-//		}
-//		if (maximumVelocity > 0) {
-//			setMaximumVelocity(maximumVelocity);
-//			if (Math.abs(velocity) > Math.abs(maximumVelocity))
-//				setVelocity(maximumVelocityX);
-//		}
-//		setLocation(locationX + velocityX, locationY + velocityY);
-//		adjustLocation(velocity.getComponentX(), velocity.getComponentY());
-//		System.out.println(velocity);
 	}
 
 	public final void draw() {
+		// Draws the object if visible, saves and restores canvas to draw
 		if (isVisible) {
 			gameEngine.getGraphicsContext().save();
 			drawObject();
@@ -107,173 +87,79 @@ public abstract class GameObject {
 		}
 	}
 
-	// TODO Cleanup this dumpster fire of getters and setters
+	//---------------------------- Reset Object ----------------------------//
+
+	public void reset() {
+		setLocation(getGameEngine().getWidth() / 2.0, getGameEngine().getHeight() / 2.0);
+		setVelocity(0, 0, 0);
+		setRotation(0);
+	}
+
+	//---------------------------- Getters and Setters ----------------------------//
 
 	// ROTATION
 	public double getRotation() { return rotation; }
-	public void setRotation(double rotation) { this.rotation = (rotation + 360) % 360; }
 	public double getRotationSpeed() { return rotationSpeed; }
+	public void setRotation(double rotation) { this.rotation = (rotation + 360) % 360; }
 	public void setRotationSpeed(double rotationSpeed) { this.rotationSpeed = rotationSpeed; }
-
-//	public double getAccelerationAngle() { return accelerationAngle; }
-//	public void setAccelerationAngle(double accelerationAngle) { this.accelerationAngle = accelerationAngle; }
-//
-
-	// Acceleration
-	public void setAcceleration(double accelerationX, double accelerationY, double offset) {
-		this.acceleration.setCartesianCoordinates(accelerationX, accelerationY, offset);
-	}
-
-	public void setAcceleration(double acceleration, double angle) {
-		this.acceleration.setPolarCoordinates(acceleration, angle);
-	}
-
-	// Velocity
-	public void setVelocity(double velocityX, double velocityY, double offset) {
-		this.velocity.setCartesianCoordinates(velocityX, velocityY, offset);
-	}
-
-	public void setVelocity(double velocity, double angle) {
-		this.velocity.setPolarCoordinates(velocity, angle);
-	}
-
-
-	//	// ACCELERATION
-//	public double getAccelerationX() { return accelerationX; }
-//	public void setAccelerationX(double accelerationX) {
-//		this.accelerationX = accelerationX;
-//		this.acceleration = Math.hypot(accelerationX, this.accelerationY);
-//		this.accelerationAngle = rotation + Math.atan2(this.accelerationY, accelerationX);
-//	}
-//	public double getAccelerationY() { return accelerationY; }
-//	public void setAccelerationY(double accelerationY) {
-//		this.accelerationY = accelerationY;
-//		this.acceleration = Math.hypot(this.accelerationX, accelerationY);
-//		this.accelerationAngle = rotation + Math.atan2(accelerationY, this.accelerationX);
-//	}
-//	public double getAcceleration() { return acceleration; }
-//	public void setAcceleration(double acceleration) {
-//		this.acceleration = acceleration;
-//		this.accelerationX = acceleration * Math.sin(rotation);
-//		this.accelerationY = acceleration * Math.cos(rotation);
-//		this.accelerationAngle = rotation + Math.atan2(this.accelerationY, this.accelerationX);
-//	}
-//	public void setAcceleration(double accelerationX, double accelerationY) {
-//		this.acceleration = Math.hypot(accelerationX, accelerationY);
-//		this.accelerationX = accelerationX;
-//		this.accelerationY = accelerationY;
-////		this.accelerationAngle = rotation + Math.toDegrees(Math.atan2(accelerationX, accelerationY));
-////		System.out.println(accelerationAngle);
-//	}
-//
-//
-//	// VELOCITY
-//	public double getVelocityX() { return velocityX; }
-//	public void setVelocityX(double velocityX) {
-//		this.velocityX = velocityX;
-//		this.velocity = Math.hypot(velocityX, this.velocityY);
-//	}
-//	public double getVelocityY() { return velocityY; }
-//	public void setVelocityY(double velocityY) {
-//		this.velocityY = velocityY;
-//		this.velocity = Math.hypot(this.velocityX, velocityY);
-//	}
-//	public double getVelocity() { return velocity; }
-//	public void setVelocity(double velocity) {
-//		if (velocity == 0)
-//			this.velocityX = this.velocityY = this.velocity = 0;
-//		else {
-//			this.velocityX = velocity * accelerationX / acceleration;
-//			this.velocityY = velocity * accelerationY / acceleration;
-//			this.velocity = velocity;
-//		}
-//	}
-//	public void setVelocity(double velocityX, double velocityY) {
-////		this.velocity = Math.hypot(velocityX, velocityY);
-//		this.velocityX = velocityX * Math.sin(Math.toRadians(rotation));
-//		this.velocityY = velocityY * Math.cos(Math.toRadians(rotation));
-//		System.out.println(Math.sin(Math.toRadians(rotation)));
-//	}
-//
-//
-//	// FRICTION
-//	public double getFrictionX() { return frictionX; }
-//	public void setFrictionX(double frictionX) {
-//		this.frictionX = frictionX;
-//		this.friction = Math.hypot(frictionX, this.frictionY);
-//	}
-//	public double getFrictionY() { return frictionY; }
-//	public void setFrictionY(double frictionY) {
-//		this.frictionY = frictionY;
-//		this.friction = Math.hypot(this.frictionX, frictionY);
-//	}
-//	public double getFriction() { return friction; }
-	public void setFriction(double friction) {
-		this.friction.setMagnitude(friction);
-	}
-//		this.friction = friction;
-//		this.frictionX = -friction * velocityX / velocity;
-//		this.frictionY = -friction * velocityY / velocity;
-//	}
-//	public void setFriction(double frictionX, double frictionY) {
-//		this.friction = Math.hypot(frictionX, frictionY);
-//		this.frictionX = frictionX;
-//		this.frictionY = frictionY;
-//	}
-//
-//
-//	// MAX VELOCITY
-//	public double getMaximumVelocityX() { return maximumVelocityX; }
-//	public void setMaximumVelocityX(double maximumVelocityX) {
-//		this.maximumVelocityX = maximumVelocityX;
-//		this.maximumVelocity = Math.hypot(maximumVelocityX, this.maximumVelocityY);
-//	}
-//	public double getMaximumVelocityY() { return maximumVelocityY; }
-//	public void setMaximumVelocityY(double maximumVelocityY) {
-//		this.maximumVelocityY = maximumVelocityY;
-//		this.maximumVelocity = Math.hypot(this.maximumVelocityX, maximumVelocityY);
-//	}
-//	public double getMaximumVelocity() { return maximumVelocity; }
-	public void setMaximumVelocity(double maximumVelocity) {
-		this.maximumVelocity.setMagnitude(maximumVelocity);
-	}
-//	public void setMaximumVelocity(double maximumVelocity) {
-//		this.maximumVelocity = maximumVelocity;
-//		this.maximumVelocityX = maximumVelocity * velocityX / velocity;
-//		this.maximumVelocityY = maximumVelocity * velocityY / velocity;
-//
-//	}
-//	public void setMaximumVelocity(double maximumVelocityX, double maximumVelocityY) {
-//		this.maximumVelocity = Math.hypot(maximumVelocityX, maximumVelocityY);
-//		this.maximumVelocityX = maximumVelocityX;
-//		this.maximumVelocityY = maximumVelocityY;
-//	}
+	
+	// ACCELERATION
+	public double getAccelerationX() { return acceleration.getComponentX(); }
+	public double getAccelerationY() { return acceleration.getComponentY(); }
+	public void setAcceleration(double accelerationX, double accelerationY, double offset) { this.acceleration.setCartesianCoordinates(accelerationX, accelerationY, offset); }
+	public void setAcceleration(double acceleration, double angle) { this.acceleration.setPolarCoordinates(acceleration, angle); }
+	public void setAcceleration(double acceleration) { this.acceleration.setMagnitude(acceleration); }
+	public void setAccelerationX(double accelerationX) { this.acceleration.setComponentX(accelerationX); }
+	public void setAccelerationY(double accelerationY) { this.acceleration.setComponentY(accelerationY); }
+	
+	// VELOCITY
+	public double getVelocityX() { return velocity.getComponentX(); }
+	public double getVelocityY() { return velocity.getComponentY(); }
+	public void setVelocity(double velocityX, double velocityY, double offset) { this.velocity.setCartesianCoordinates(velocityX, velocityY, offset); }
+	public void setVelocity(double velocity, double angle) { this.velocity.setPolarCoordinates(velocity, angle); }
+	public void setVelocity(double velocity) { this.velocity.setMagnitude(velocity); }
+	public void setVelocityX(double velocityX) { this.velocity.setComponentX(velocityX); }
+	public void setVelocityY(double velocityY) { this.velocity.setComponentY(velocityY); }
+	
+	// FRICTION
+	public double getFrictionX() { return friction.getComponentX(); }
+	public double getFrictionY() { return friction.getComponentY(); }
+	public void setFriction(double frictionX, double frictionY, double offset) { this.friction.setCartesianCoordinates(frictionX, frictionY, offset); }
+	public void setFriction(double friction, double angle) { this.friction.setPolarCoordinates(friction, angle); }
+	public void setFriction(double friction) { this.friction.setMagnitude(friction); }
+	public void setFrictionX(double frictionX) { this.friction.setComponentX(frictionX); }
+	public void setFrictionY(double frictionY) { this.friction.setComponentY(frictionY); }
+	
+	// MAX VELOCITY
+	public double getMaximumVelocityX() { return maximumVelocity.getComponentX(); }
+	public double getMaximumVelocityY() { return maximumVelocity.getComponentY(); }
+	public void setMaximumVelocity(double maximumVelocityX, double maximumVelocityY, double offset) { this.maximumVelocity.setCartesianCoordinates(maximumVelocityX, maximumVelocityY, offset); }
+	public void setMaximumVelocity(double maximumVelocity, double angle) { this.maximumVelocity.setPolarCoordinates(maximumVelocity, angle); }
+	public void setMaximumVelocity(double maximumVelocity) { this.maximumVelocity.setMagnitude(maximumVelocity); }
+	public void setMaximumVelocityX(double maximumVelocityX) { this.maximumVelocity.setComponentX(maximumVelocityX); }
+	public void setMaximumVelocityY(double maximumVelocityY) { this.maximumVelocity.setComponentY(maximumVelocityY); }
 
 	// LOCATION
 	public double getLocationX() { return locationX; }
 	public double getLocationY() { return locationY; }
-
-	public void setLocationX(double locationX) { this.locationX = locationX; }
-	public void setLocationY(double locationY) { this.locationY = locationY; }
-
 	public void setLocation(double locationX, double locationY) {
 		this.locationX = locationX;
 		this.locationY = locationY;
 	}
-
+	public void setLocationX(double locationX) { this.locationX = locationX; }
+	public void setLocationY(double locationY) { this.locationY = locationY; }
 	public void adjustLocation(double locationX, double locationY) {
 		this.locationX += locationX;
 		this.locationY += locationY;
 	}
-
 	public void adjustLocation(Vector2D velocity) {
 		this.locationX += velocity.getComponentX();
 		this.locationY += velocity.getComponentY();
 	}
 
 	// EXTRAS
-//	public double getMass() { return mass; }
-//	public void setMass(double mass) { this.mass = mass; }
+	public double getMass() { return mass; }
+	public void setMass(double mass) { this.mass = mass; }
 
 	public boolean isVisible() { return isVisible; }
 	public void setVisibility(boolean visible) { isVisible = visible; }
@@ -289,8 +175,9 @@ public abstract class GameObject {
 	public String getObjectType() { return objectType; }
 	public void setObjectType(String objectType) { this.objectType = objectType; }
 
-//	@Override
-//	public String toString() { return String.format("[%s: %s]", objectName, objectType); }
-//	public String toString() { return String.format("%s %s %s %s %s", velocity, velocityX, velocityY, rotation, accelerationAngle); }
+	//---------------------------- To String ----------------------------//
+
+	@Override
+	public String toString() { return String.format("[%s: %s]", objectName, objectType); }
 
 }

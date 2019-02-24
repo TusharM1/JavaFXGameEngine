@@ -2,7 +2,7 @@ package GameEngine.Utilities;
 
 public class Vector2D {
 
-	//---------------------------- Declare Fields ----------------------------//
+	//---------------------------- Fields ----------------------------//
 
 	// Cartesian Coordinate System
 	private double componentX, componentY;
@@ -47,7 +47,6 @@ public class Vector2D {
 	// Sets Polar Coordinates directly; Overrides all fields
 	public void setPolarCoordinates(double magnitude, double angle) {
 		this.magnitude = magnitude;
-//		this.angleDegrees = ((90 + angle) + 360) % 360;
 		this.angleDegrees = (angle + 360) % 360;
 		this.angleRadians = Math.toRadians(this.angleDegrees);
 		calculateCartesianCoordinates();
@@ -60,7 +59,6 @@ public class Vector2D {
 		this.magnitude = Math.hypot(this.componentX, this.componentY);
 		this.angleRadians = Math.atan2(this.componentX, -this.componentY);
 		this.angleDegrees = (Math.toDegrees(this.angleRadians) + 360) % 360;
-//		System.out.println(angleDegrees);
 	}
 
 	// Updates X and Y Components given that Magnitude and Angle are Up-To-Date; Note: ComponentY is negative because pixel are drawn down in the positive direction
@@ -73,7 +71,6 @@ public class Vector2D {
 
 	// Add another vector to this vector
 	public void add(Vector2D vector2D) {
-//		System.out.println(this.componentX + " " + this.componentY + " " + vector2D.componentX + " " + vector2D.componentY);
 		this.componentX += vector2D.getComponentX();
 		this.componentY += vector2D.getComponentY();
 		calculatePolarCoordinates();
@@ -140,7 +137,6 @@ public class Vector2D {
 		this.angleDegrees = (angle + 360) % 360;
 		this.angleRadians = Math.toRadians(this.angleDegrees);
 		calculateCartesianCoordinates();
-//		System.out.println(angleDegrees);
 	}
 
 	//---------------------------- Getters ----------------------------//

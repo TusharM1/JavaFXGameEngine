@@ -25,7 +25,6 @@ public abstract class GameObject {
 //			maximumVelocity, maximumVelocityX, maximumVelocityY,
 //			locationX, locationY, mass;
 
-	private double rotation, rotationSpeed, locationX, locationY;
 //			acceleration, accelerationX, accelerationY,
 //			friction, frictionX, frictionY,
 //			velocity, velocityX, velocityY,
@@ -41,6 +40,9 @@ public abstract class GameObject {
 	Vector2D maximumVelocity;
 	Vector2D velocity;
 
+	private double locationX, locationY,
+			rotation, rotationSpeed;
+
 	public GameObject() {
 		isVisible = true;
 
@@ -52,7 +54,34 @@ public abstract class GameObject {
 
 	public void update() {
 //		setVelocity(velocity + acceleration);
-		setRotation(rotation + rotationSpeed);
+		rotation += rotationSpeed;
+
+		System.out.println(velocity + " " + friction);
+
+		friction.setAngle(velocity.getAngle() + 180);
+		maximumVelocity.setAngle(velocity.getAngle());
+
+		velocity.add(acceleration);
+//		friction.changeSign(-velocity.getMagnitude());
+
+//		System.out.println(friction);
+//		System.out.println(rotation + 180);
+
+//		System.out.println(velocity.getAngle() + " " + friction.getAngle());
+
+		if (Math.abs(velocity.getMagnitude()) > Math.abs(friction.getMagnitude()))
+//			System.out.println(velocity.getAngle());
+			velocity.add(friction);
+		else
+			velocity.setMagnitude(0);
+//
+
+		if (Math.abs(velocity.getMagnitude()) > Math.abs(maximumVelocity.getMagnitude()))
+			velocity.setMagnitude(maximumVelocity.getMagnitude());
+
+//		System.out.println(friction);
+		adjustLocation(velocity);
+
 //		if (friction > 0) {
 //			setFriction(friction);
 //			if (Math.abs(velocity) > Math.abs(friction))
@@ -66,7 +95,7 @@ public abstract class GameObject {
 //				setVelocity(maximumVelocityX);
 //		}
 //		setLocation(locationX + velocityX, locationY + velocityY);
-		addLocation(velocity.getComponentX(), velocity.getComponentY()); // TODO overload function with Vector parameter
+//		adjustLocation(velocity.getComponentX(), velocity.getComponentY());
 //		System.out.println(velocity);
 	}
 
@@ -101,9 +130,7 @@ public abstract class GameObject {
 
 	// Velocity
 	public void setVelocity(double velocityX, double velocityY, double offset) {
-//		System.out.println(velocityX + " " + velocityY + " " + offset);
 		this.velocity.setCartesianCoordinates(velocityX, velocityY, offset);
-//		System.out.println(velocity);
 	}
 
 	public void setVelocity(double velocity, double angle) {
@@ -181,7 +208,9 @@ public abstract class GameObject {
 //		this.friction = Math.hypot(this.frictionX, frictionY);
 //	}
 //	public double getFriction() { return friction; }
-//	public void setFriction(double friction) {
+	public void setFriction(double friction) {
+		this.friction.setMagnitude(friction);
+	}
 //		this.friction = friction;
 //		this.frictionX = -friction * velocityX / velocity;
 //		this.frictionY = -friction * velocityY / velocity;
@@ -205,6 +234,9 @@ public abstract class GameObject {
 //		this.maximumVelocity = Math.hypot(this.maximumVelocityX, maximumVelocityY);
 //	}
 //	public double getMaximumVelocity() { return maximumVelocity; }
+	public void setMaximumVelocity(double maximumVelocity) {
+		this.maximumVelocity.setMagnitude(maximumVelocity);
+	}
 //	public void setMaximumVelocity(double maximumVelocity) {
 //		this.maximumVelocity = maximumVelocity;
 //		this.maximumVelocityX = maximumVelocity * velocityX / velocity;
@@ -219,16 +251,24 @@ public abstract class GameObject {
 
 	// LOCATION
 	public double getLocationX() { return locationX; }
-	public void setLocationX(double locationX) { this.locationX = locationX; }
 	public double getLocationY() { return locationY; }
+
+	public void setLocationX(double locationX) { this.locationX = locationX; }
 	public void setLocationY(double locationY) { this.locationY = locationY; }
+
 	public void setLocation(double locationX, double locationY) {
 		this.locationX = locationX;
 		this.locationY = locationY;
 	}
-	public void addLocation(double locationX, double locationY) {
+
+	public void adjustLocation(double locationX, double locationY) {
 		this.locationX += locationX;
 		this.locationY += locationY;
+	}
+
+	public void adjustLocation(Vector2D velocity) {
+		this.locationX += velocity.getComponentX();
+		this.locationY += velocity.getComponentY();
 	}
 
 	// EXTRAS

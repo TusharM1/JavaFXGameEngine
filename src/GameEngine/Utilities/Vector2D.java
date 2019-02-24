@@ -38,47 +38,17 @@ public class Vector2D {
 
 	//---------------------------- Set Coordinates ----------------------------//
 
-//	// Sets Cartesian Coordinates directly; Overrides all fields
-//	public void setCartesianCoordinates(double componentX, double componentY) {
-//		this.componentX = componentX;
-//		this.componentY = componentY;
-//		calculatePolarCoordinates();
-//	}
-
 	// Sets Cartesian Coordinates with an initial offset angle
 	public void setCartesianCoordinates(double componentX, double componentY, double offsetAngle) {
-
-//		System.out.print(componentX + " " + -componentY + " " + offsetAngle + " ");
-
-		setPolarCoordinates(Math.hypot(componentX, componentY), Math.toDegrees(Math.atan2(componentY, componentX)) + offsetAngle);
-
-//		this.magnitude = Math.hypot(componentX, componentY);
-//
-//		setAngle(Math.toDegrees(Math.atan2(componentY, componentX)) + offsetAngle);
-//
-//		this.angleDegrees = ((90 + Math.toDegrees(Math.atan2(componentY, componentX)) + offsetAngle) + 360) % 360;
-//		this.angleRadians = Math.toRadians(this.angleDegrees);
-//
-//		this.componentX = this.magnitude * Math.sin(this.angleRadians);
-//		this.componentY = this.magnitude * -Math.cos(this.angleRadians);
-
-		//		this.angleDegrees = (90 + Math.toDegrees(Math.atan2(componentY, componentX) + offsetAngle) + 360) % 360;
-//		this.angleRadians = Math.toRadians(this.angleDegrees);
-
-//		calculateCartesianCoordinates();
-
-//		this.componentX = this.magnitude * Math.sin(this.angleRadians);
-//		this.componentY = -this.magnitude * Math.cos(this.angleRadians);
-
-//		System.out.println(this.componentX + " " + this.componentY + " " + this.angleDegrees);
-//		System.out.println(this.magnitude + " " + this.componentX + " " + this.componentY + " " + this.angleDegrees);
-
+		setPolarCoordinates(Math.hypot(componentX, componentY),
+				90 + Math.toDegrees(Math.atan2(componentY, componentX)) + offsetAngle);
 	}
 
 	// Sets Polar Coordinates directly; Overrides all fields
 	public void setPolarCoordinates(double magnitude, double angle) {
 		this.magnitude = magnitude;
-		this.angleDegrees = ((90 + angle) + 360) % 360;
+//		this.angleDegrees = ((90 + angle) + 360) % 360;
+		this.angleDegrees = (angle + 360) % 360;
 		this.angleRadians = Math.toRadians(this.angleDegrees);
 		calculateCartesianCoordinates();
 	}
@@ -88,12 +58,12 @@ public class Vector2D {
 	// Updates Magnitude and Angle given that X and Y Components are Up-To-Date
 	private void calculatePolarCoordinates() {
 		this.magnitude = Math.hypot(this.componentX, this.componentY);
-		this.angleRadians = Math.atan2(this.componentX, this.componentY);
-		this.angleDegrees = Math.toDegrees(this.angleRadians);
+		this.angleRadians = Math.atan2(this.componentX, -this.componentY);
+		this.angleDegrees = (Math.toDegrees(this.angleRadians) + 360) % 360;
+//		System.out.println(angleDegrees);
 	}
 
-	// Updates X and Y Components given that Magnitude and Angle are Up-To-Date
-	// Check the Negative Sign On This function
+	// Updates X and Y Components given that Magnitude and Angle are Up-To-Date; Note: ComponentY is negative because pixel are drawn down in the positive direction
 	private void calculateCartesianCoordinates() {
 		this.componentX = this.magnitude * Math.sin(this.angleRadians);
 		this.componentY = this.magnitude * -Math.cos(this.angleRadians);
@@ -103,6 +73,7 @@ public class Vector2D {
 
 	// Add another vector to this vector
 	public void add(Vector2D vector2D) {
+//		System.out.println(this.componentX + " " + this.componentY + " " + vector2D.componentX + " " + vector2D.componentY);
 		this.componentX += vector2D.getComponentX();
 		this.componentY += vector2D.getComponentY();
 		calculatePolarCoordinates();
@@ -143,6 +114,10 @@ public class Vector2D {
 		calculateCartesianCoordinates();
 	}
 
+	public void changeSign(double sign) {
+		this.magnitude = Math.copySign(this.magnitude, sign);
+	}
+
 	//---------------------------- Setters ----------------------------//
 
 	// Setters for Fields; Modifies all but the complementary field
@@ -162,9 +137,10 @@ public class Vector2D {
 	}
 
 	public void setAngle(double angle) {
-		this.angleDegrees = ((90 + angle) + 360) % 360;
+		this.angleDegrees = (angle + 360) % 360;
 		this.angleRadians = Math.toRadians(this.angleDegrees);
 		calculateCartesianCoordinates();
+//		System.out.println(angleDegrees);
 	}
 
 	//---------------------------- Getters ----------------------------//
@@ -185,42 +161,3 @@ public class Vector2D {
 	}
 	
 }
-
-		/*
-
-    var x1 = r * 1 * cos(theta);
-    var y1 = r * -1 * sin(theta);
-    // var x1 = 120;
-    // var y1 = 120 * -1;
-
-    var x2 = (x1*cos(offset) - y1*sin(offset));
-    var y2 = (x1*sin(offset) + y1*cos(offset));
-    var theta2 = (atan(y2/x2) + 360) % 360;
-
-		 */
-
-//		double magnitude = Math.hypot(componentX, componentY);
-//		double angle = Math.toDegrees(Math.atan2(componentY, componentX));
-//
-//		double x1 = magnitude * Math.cos(angle);
-//		double y1 = -magnitude * Math.sin(angle);
-//
-//		double x2 = (x1 * Math.cos(offsetAngle) - y1 * Math.sin(offsetAngle));
-//		double y2 = (x1 * Math.sin(offsetAngle) + y1 * Math.cos(offsetAngle));
-//
-//		double angle2 = (Math.toDegrees(Math.atan2(y2, x2)) + 360) % 360;
-//
-//		this.magnitude = magnitude;
-//		this.angleRadians = Math.atan2(y2, x2);
-//		this.angleDegrees = Math.toDegrees(angleRadians);
-//		this.componentX = x2;
-//		this.componentY = y2;
-
-//		double vectorAngle = ;
-//		double finalAngle = offsetAngle + vectorAngle;
-
-//		this.angleDegrees = (90 - Math.toDegrees(Math.atan2(componentY, componentX)) + offsetAngle + 360) % 360;
-//		this.angleRadians = Math.toRadians(this.angleDegrees);
-//
-//		calculateCartesianCoordinates();
-//		System.out.println(this);

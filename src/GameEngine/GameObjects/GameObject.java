@@ -65,7 +65,9 @@ public abstract class GameObject {
 //			if (Math.abs(velocity) > Math.abs(maximumVelocity))
 //				setVelocity(maximumVelocityX);
 //		}
-		setLocation(locationX + velocityX, locationY + velocityY);
+//		setLocation(locationX + velocityX, locationY + velocityY);
+		addLocation(velocity.getComponentX(), velocity.getComponentY()); // TODO overload function with Vector parameter
+//		System.out.println(velocity);
 	}
 
 	public final void draw() {
@@ -87,8 +89,29 @@ public abstract class GameObject {
 //	public double getAccelerationAngle() { return accelerationAngle; }
 //	public void setAccelerationAngle(double accelerationAngle) { this.accelerationAngle = accelerationAngle; }
 //
-//
-//	// ACCELERATION
+
+	// Acceleration
+	public void setAcceleration(double accelerationX, double accelerationY, double offset) {
+		this.acceleration.setCartesianCoordinates(accelerationX, accelerationY, offset);
+	}
+
+	public void setAcceleration(double acceleration, double angle) {
+		this.acceleration.setPolarCoordinates(acceleration, angle);
+	}
+
+	// Velocity
+	public void setVelocity(double velocityX, double velocityY, double offset) {
+//		System.out.println(velocityX + " " + velocityY + " " + offset);
+		this.velocity.setCartesianCoordinates(velocityX, velocityY, offset);
+//		System.out.println(velocity);
+	}
+
+	public void setVelocity(double velocity, double angle) {
+		this.velocity.setPolarCoordinates(velocity, angle);
+	}
+
+
+	//	// ACCELERATION
 //	public double getAccelerationX() { return accelerationX; }
 //	public void setAccelerationX(double accelerationX) {
 //		this.accelerationX = accelerationX;
@@ -138,12 +161,12 @@ public abstract class GameObject {
 //			this.velocity = velocity;
 //		}
 //	}
-	public void setVelocity(double velocityX, double velocityY) {
-//		this.velocity = Math.hypot(velocityX, velocityY);
-		this.velocityX = velocityX * Math.sin(Math.toRadians(rotation));
-		this.velocityY = velocityY * Math.cos(Math.toRadians(rotation));
-		System.out.println(Math.sin(Math.toRadians(rotation)));
-	}
+//	public void setVelocity(double velocityX, double velocityY) {
+////		this.velocity = Math.hypot(velocityX, velocityY);
+//		this.velocityX = velocityX * Math.sin(Math.toRadians(rotation));
+//		this.velocityY = velocityY * Math.cos(Math.toRadians(rotation));
+//		System.out.println(Math.sin(Math.toRadians(rotation)));
+//	}
 //
 //
 //	// FRICTION
@@ -203,10 +226,14 @@ public abstract class GameObject {
 		this.locationX = locationX;
 		this.locationY = locationY;
 	}
+	public void addLocation(double locationX, double locationY) {
+		this.locationX += locationX;
+		this.locationY += locationY;
+	}
 
 	// EXTRAS
-	public double getMass() { return mass; }
-	public void setMass(double mass) { this.mass = mass; }
+//	public double getMass() { return mass; }
+//	public void setMass(double mass) { this.mass = mass; }
 
 	public boolean isVisible() { return isVisible; }
 	public void setVisibility(boolean visible) { isVisible = visible; }
@@ -222,8 +249,8 @@ public abstract class GameObject {
 	public String getObjectType() { return objectType; }
 	public void setObjectType(String objectType) { this.objectType = objectType; }
 
-	@Override
+//	@Override
 //	public String toString() { return String.format("[%s: %s]", objectName, objectType); }
-	public String toString() { return String.format("%s %s %s %s %s", velocity, velocityX, velocityY, rotation, accelerationAngle); }
+//	public String toString() { return String.format("%s %s %s %s %s", velocity, velocityX, velocityY, rotation, accelerationAngle); }
 
 }

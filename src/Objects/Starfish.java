@@ -47,7 +47,7 @@ public class Starfish extends PolygonGameObject {
 //		setAcceleration((getGameEngine().getKeyboard()[KeyCode.D.getCode()] ? .1 : 0) + (getGameEngine().getKeyboard()[KeyCode.A.getCode()] ? -.1 : 0),
 //				(getGameEngine().getKeyboard()[KeyCode.W.getCode()] ? -.1 : 0) + (getGameEngine().getKeyboard()[KeyCode.S.getCode()] ? .1 : 0));
 		setVelocity((getGameEngine().getKeyboard()[KeyCode.D.getCode()] ? 3 : 0) + (getGameEngine().getKeyboard()[KeyCode.A.getCode()] ? -3 : 0),
-				(getGameEngine().getKeyboard()[KeyCode.W.getCode()] ? -3 : 0) + (getGameEngine().getKeyboard()[KeyCode.S.getCode()] ? 3 : 0));
+				(getGameEngine().getKeyboard()[KeyCode.W.getCode()] ? -3 : 0) + (getGameEngine().getKeyboard()[KeyCode.S.getCode()] ? 3 : 0), getRotation());
 
 		super.update();
 	}

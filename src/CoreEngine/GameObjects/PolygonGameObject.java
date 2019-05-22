@@ -1,4 +1,4 @@
-package GameEngine.GameObjects;
+package CoreEngine.GameObjects;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;

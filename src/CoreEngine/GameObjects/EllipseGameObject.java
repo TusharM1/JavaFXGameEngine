@@ -1,4 +1,4 @@
-package GameEngine.GameObjects;
+package CoreEngine.GameObjects;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -21,6 +21,10 @@ public class EllipseGameObject extends GameObject {
 		setHitBox(new Ellipse(centerX, centerY, radiusX, radiusY));
 		setColor(Color.WHITE);
 		setObjectType("EllipseGameObject");
+	}
+
+	public EllipseGameObject(double radiusX, double radiusY) {
+		this(getGameEngine().getWidth() / 2 - radiusX, getGameEngine().getHeight() / 2 - radiusY, radiusX, radiusY);
 	}
 
 	@Override

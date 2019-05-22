@@ -1,14 +1,12 @@
 package Tests;
 
-import GameEngine.GameEngine;
-import GameEngine.GameObjects.GameObject;
-import GameEngine.IGameLoop;
+import CoreEngine.GameEngine;
+import CoreEngine.GameObjects.GameObject;
+import CoreEngine.IGameLoop;
 import Objects.DragCircle;
 import Objects.DragSquare;
 import Objects.DragStar;
 import javafx.application.Application;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -54,7 +52,7 @@ public class DragShapesTest extends Application implements IGameLoop {
 	public void updateFrame() {
 		for (int i = 0; i < renderQueue.size(); i++) {
 			for (int j = i + 1; j < renderQueue.size(); j++) {
-				if (((Path) Shape.intersect(renderQueue.get(i).getHitBox(), renderQueue.get(j).getHitBox())).getElements().size() > 0) {
+				if (GameObject.intersects(renderQueue.get(i), renderQueue.get(j))) {
 					System.out.println("Collision");
 				}
 			}
@@ -64,7 +62,7 @@ public class DragShapesTest extends Application implements IGameLoop {
 
 //		Group group = gameEngine.getGroup();
 //		subGroup = new Group();
-//		for (GameEngine.GameObject gameObject : renderQueue)
+//		for (CoreEngine.GameObject gameObject : renderQueue)
 //			subGroup.getChildren().add(gameObject.getNode());
 //		group.getChildren().add(subGroup);
 	}

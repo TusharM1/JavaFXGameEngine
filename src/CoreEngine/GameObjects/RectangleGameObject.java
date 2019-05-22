@@ -1,4 +1,4 @@
-package GameEngine.GameObjects;
+package CoreEngine.GameObjects;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -11,15 +11,18 @@ public class RectangleGameObject extends GameObject {
 	private Rectangle hitBox;
 	private Color color;
 
-	private double width, height,
-					widthCenter, heightCenter;
+	private double width, height, widthCenter, heightCenter;
 
 	public RectangleGameObject(double locationX, double locationY, double width, double height) {
-		setLocation(locationX, locationY);
 		setSize(width, height);
-		setHitBox(new Rectangle(locationX, locationY, width, height));
+		setLocation(locationX, locationY);
+		setHitBox(new Rectangle(getLocationX(), getLocationY(), width, height));
 		setColor(Color.WHITE);
 		setObjectType("RectangleGameObject");
+	}
+
+	public RectangleGameObject(double width, double height) {
+		this((getGameEngine().getWidth() - width) / 2, (getGameEngine().getHeight() - height) / 2, width, height);
 	}
 
 	@Override
@@ -44,6 +47,11 @@ public class RectangleGameObject extends GameObject {
 	}
 
 	@Override
+	public void reset() {
+		super.reset(getGameEngine().getWidth() / 2 - widthCenter, getGameEngine().getHeight() / 2 - heightCenter);
+	}
+
+	@Override
 	public Rectangle getHitBox() { return hitBox; }
 	public void setHitBox(Rectangle hitBox) { this.hitBox = hitBox; }
 
@@ -62,5 +70,11 @@ public class RectangleGameObject extends GameObject {
 	}
 	public double getWidthCenter() { return widthCenter; }
 	public double getHeightCenter() { return heightCenter; }
+
+	@Override
+	public double getCenterInCanvasX() { return getCanvas().getWidth() / 2 - widthCenter; }
+
+	@Override
+	public double getCenterInCanvasY() { return getCanvas().getHeight() / 2 - heightCenter; }
 
 }

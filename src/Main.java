@@ -1,31 +1,41 @@
-import GameEngine.GameEngine;
-import GameEngine.GameObjects.GameObject;
-import GameEngine.IGameLoop;
-import Objects.*;
+import CoreEngine.GameEngine;
+import CoreEngine.GameObjects.GameObject;
+import CoreEngine.IGameLoop;
+import CoreEngine.Layer;
+import Objects.DragCircle;
+import Objects.SpaceShip;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
+// TODO Make multithreaded and add server functionality, add key listeners for individual keys - especially for the mouse
 
 public class Main extends Application implements IGameLoop {
 
 	GameEngine gameEngine;
-	ArrayList<GameObject> renderQueue;
+//	ArrayList<GameObject> renderQueue;
+
+//	Layer gameObjects;
+
+//	ArrayList<Layer> layers;
 
 	@Override
 	public void init() throws Exception {
 		super.init();
 
 		gameEngine = new GameEngine(this, 640, 480);
+//		gameEngine.addLayer(new Layer());
 
-		renderQueue = gameEngine.getRenderQueue();
+//		layers = new ArrayList<>();
+
+//		renderQueue = gameEngine.getRenderQueue();
 	}
 
 	@Override
     public void start(Stage primaryStage) {
 
-		renderQueue.add(new SpaceShip(200, 200, 100, 100));
+//		renderQueue.add(new SpaceShip(200, 200, 100, 100));
 //		renderQueue.add(new SpaceShip(0, 0, 100, 100));
 //		renderQueue.add(new FloatingBall(200, 200, 50, 50));
 //		renderQueue.add(new FloatingBall(0, 0, 50, 50));
@@ -36,7 +46,10 @@ public class Main extends Application implements IGameLoop {
 //		renderQueue.add(new DragSquare(200, 200, 100, 100));
 //		renderQueue.add(new DragStar(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, -75));
 
-        primaryStage.setTitle("Asteroids Remade");
+		gameEngine.addLayer(new Layer(new SpaceShip(100, 100)));
+//		gameEngine.addLayer(new Layer(new DragCircle(150, 50)));
+
+        primaryStage.setTitle("Game Engine");
         primaryStage.setScene(gameEngine.getScene());
         primaryStage.show();
 
@@ -47,10 +60,14 @@ public class Main extends Application implements IGameLoop {
 
 	@Override
 	public void updateFrame() {
+
+//		if (gameEngine.getKeyboard()[KeyCode.T.getCode()])
+//			gameEngine.
+
 //		System.out.println(renderQueue.get(0));
 //		Group group = gameEngine.getGroup();
 //		subGroup = new Group();
-//		for (GameEngine.GameObject gameObject : renderQueue)
+//		for (CoreEngine.GameObject gameObject : renderQueue)
 //			subGroup.getChildren().add(gameObject.getNode());
 //		group.getChildren().add(subGroup);
 	}

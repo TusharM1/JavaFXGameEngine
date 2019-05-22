@@ -1,6 +1,6 @@
 package Tests;
 
-import GameEngine.Utilities.Vector2D;
+import CoreEngine.Utilities.Vector2D;
 
 import java.util.Scanner;
 

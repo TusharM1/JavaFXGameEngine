@@ -1,4 +1,4 @@
-package GameEngine;
+package CoreEngine;
 
 public interface IGameLoop {
 

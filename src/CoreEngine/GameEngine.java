@@ -1,6 +1,6 @@
-package GameEngine;
+package CoreEngine;
 
-import GameEngine.GameObjects.GameObject;
+import CoreEngine.GameObjects.GameObject;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class GameEngine {
 
@@ -28,6 +29,7 @@ public class GameEngine {
 	private GameLoop gameLoop;
 
 	private ArrayList<GameObject> renderQueue;
+	private TreeSet<Layer> layers;
 
 	private boolean[] keyboard;
 
@@ -41,6 +43,7 @@ public class GameEngine {
 
 		gameLoop = new GameLoop();
 		renderQueue = new ArrayList<>();
+		layers = new TreeSet<>();
 
 		keyboard = new boolean[65536];
 		mouseHitBox = new Rectangle(1, 1);
@@ -74,20 +77,27 @@ public class GameEngine {
 		GameObject.setGameEngine(this);
 	}
 
+	public void addLayer(Layer layer) {
+		layers.add(layer);
+	}
+
+	public TreeSet<Layer> getLayers() {
+		return layers;
+	}
+
 	private class GameLoop extends AnimationTimer {
 		@Override
 		public void handle(long now) {
 			graphicsContext.setFill(Color.CYAN);
 			graphicsContext.fillRect(0, 0, width, height);
 
-			// Despite IntelliSense saying otherwise, DO NOT CONVERT THIS INTO A FOR-EACH LOOP. Things will break
-			for (int i = 0; i < renderQueue.size(); i++)
-				renderQueue.get(i).update();
+			for (Layer layer : layers)
+				layer.updateAll();
 
 			game.updateFrame();
 
-			for (GameObject gameObject : renderQueue)
-				gameObject.draw();
+			for (Layer layer : layers)
+				layer.renderAll();
 		}
 	}
 

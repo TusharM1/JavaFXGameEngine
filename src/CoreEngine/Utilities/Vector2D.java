@@ -1,4 +1,4 @@
-package GameEngine.Utilities;
+package CoreEngine.Utilities;
 
 public class Vector2D {
 
@@ -22,10 +22,9 @@ public class Vector2D {
 	}
 
 	// Generates a Cartesian Vector
-	// TODO check if offset should be added to parameter list
-	public static Vector2D createCartesianVector(double componentX, double componentY) {
+	public static Vector2D createCartesianVector(double componentX, double componentY, double offsetAngle) {
 		Vector2D vector2D = new Vector2D();
-		vector2D.setCartesianCoordinates(componentX, componentY, 0);
+		vector2D.setCartesianCoordinates(componentX, componentY, offsetAngle);
 		return vector2D;
 	}
 
@@ -61,7 +60,8 @@ public class Vector2D {
 		this.angleDegrees = (Math.toDegrees(this.angleRadians) + 360) % 360;
 	}
 
-	// Updates X and Y Components given that Magnitude and Angle are Up-To-Date; Note: ComponentY is negative because pixel are drawn down in the positive direction
+	// Updates X and Y Components given that Magnitude and Angle are Up-To-Date
+	// Note: ComponentY is negative because pixel are drawn down in the positive direction
 	private void calculateCartesianCoordinates() {
 		this.componentX = this.magnitude * Math.sin(this.angleRadians);
 		this.componentY = this.magnitude * -Math.cos(this.angleRadians);
@@ -93,7 +93,7 @@ public class Vector2D {
 	// Add two vectors together and return the resulting sum of the vector
 	public static Vector2D add(Vector2D vector1, Vector2D vector2) {
 		return Vector2D.createCartesianVector(vector1.getComponentX() + vector2.getComponentX(),
-				vector2.getComponentY() + vector2.getComponentY());
+				vector2.getComponentY() + vector2.getComponentY(), 0);
 	}
 
 	//---------------------------- Vector Subtraction ----------------------------//

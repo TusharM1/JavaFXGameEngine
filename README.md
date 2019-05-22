@@ -1,4 +1,4 @@
-# GameEngine
+# CoreEngine
 This is a Game Engine written in Java for JavaFX
 
 This Game Engine is a Work In Progress.

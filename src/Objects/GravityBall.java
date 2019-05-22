@@ -1,6 +1,6 @@
 package Objects;
 
-import GameEngine.GameObjects.EllipseGameObject;
+import CoreEngine.GameObjects.EllipseGameObject;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 

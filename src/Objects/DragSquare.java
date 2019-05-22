@@ -1,6 +1,6 @@
 package Objects;
 
-import GameEngine.GameObjects.RectangleGameObject;
+import CoreEngine.GameObjects.RectangleGameObject;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

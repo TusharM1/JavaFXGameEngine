@@ -1,12 +1,14 @@
-package GameEngine.GameObjects;
+package CoreEngine.GameObjects;
 
-import GameEngine.GameEngine;
-import GameEngine.Utilities.Vector2D;
+import CoreEngine.GameEngine;
+import CoreEngine.Utilities.Vector2D;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Shape;
 
 // TODO convert this class into an interface
 // TODO comment all of this code at some point
+// TODO convert all GameObjects to use Builder design pattern to simplify constructors
 
 // Possibly only have Polygon, Ellipse, Image and maybe Path Game Objects. Try making the rectangle Game Object into a polygon
 // Also try adding translation and rotation transformations to the original polygon points and remove the extra translation and rotation code.
@@ -89,10 +91,14 @@ public abstract class GameObject {
 
 	//---------------------------- Reset Object ----------------------------//
 
-	public void reset() {
-		setLocation(getGameEngine().getWidth() / 2.0, getGameEngine().getHeight() / 2.0);
+	public void reset(double locationX, double locationY) {
+		setLocation(locationX, locationY);
 		setVelocity(0, 0, 0);
 		setRotation(0);
+	}
+
+	public void reset() {
+		reset(getGameEngine().getWidth() / 2.0, getGameEngine().getHeight() / 2.0);
 	}
 
 	//---------------------------- Getters and Setters ----------------------------//
@@ -166,14 +172,24 @@ public abstract class GameObject {
 
 	protected abstract void drawObject();
 	public abstract Shape getHitBox();
+
 	public static void setGameEngine(GameEngine gameEngine) { GameObject.gameEngine = gameEngine; }
 	public static GameEngine getGameEngine() { return GameObject.gameEngine; }
 	public static GraphicsContext getGraphicsContext() { return gameEngine.getGraphicsContext(); }
+	public static Canvas getCanvas() { return gameEngine.getCanvas(); }
+
+	public double getCenterInCanvasX() { return getCanvas().getWidth() / 2; }
+	public double getCenterInCanvasY() { return getCanvas().getHeight() / 2; }
 
 	public String getObjectName() { return objectName; }
 	public void setObjectName(String objectName) { this.objectName = objectName; }
 	public String getObjectType() { return objectType; }
 	public void setObjectType(String objectType) { this.objectType = objectType; }
+
+	public static boolean intersects(GameObject gameObject1, GameObject gameObject2) {
+//		return ((Path) Shape.intersect(gameObject1.getHitBox(), gameObject2.getHitBox())).getElements().size() > 0;
+		return !Shape.intersect(gameObject1.getHitBox(), gameObject2.getHitBox()).getBoundsInParent().isEmpty();
+	}
 
 	//---------------------------- To String ----------------------------//
 

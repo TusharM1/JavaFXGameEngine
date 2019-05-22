@@ -1,4 +1,4 @@
-package GameEngine.GameObjects;
+package CoreEngine.GameObjects;
 
 public class ImageGameObject {
 }

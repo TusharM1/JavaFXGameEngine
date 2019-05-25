@@ -1,6 +1,7 @@
 package CoreEngine.GameObjects;
 
 import CoreEngine.GameEngine;
+import CoreEngine.Location;
 import CoreEngine.Utilities.Vector2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -24,9 +25,11 @@ public abstract class GameObject {
 	Vector2D maximumVelocity;
 	Vector2D velocity;
 
+	Location location;
+
 	private String objectName, objectType;
 
-	private double locationX, locationY, rotation, rotationSpeed, mass;
+	private double rotation, rotationSpeed, mass;
 	private boolean isVisible;
 
 	//---------------------------- Constructor ----------------------------//
@@ -43,8 +46,7 @@ public abstract class GameObject {
 		objectType = "GameObject";
 
 		// Move Object to Center of Canvas
-		locationX = gameEngine.getWidth() / 2;
-		locationY = gameEngine.getHeight() / 2;
+		location = new Location(gameEngine.getWidth() / 2, gameEngine.getHeight() / 2);
 
 		// Set Default Values of Fields
 		rotation = 0;
@@ -52,6 +54,8 @@ public abstract class GameObject {
 
 		isVisible = true;
 	}
+
+//	public abstract void initialize();
 
 	//---------------------------- Update Object ----------------------------//
 
@@ -146,22 +150,17 @@ public abstract class GameObject {
 	public void setMaximumVelocityY(double maximumVelocityY) { this.maximumVelocity.setComponentY(maximumVelocityY); }
 
 	// LOCATION
-	public double getLocationX() { return locationX; }
-	public double getLocationY() { return locationY; }
-	public void setLocation(double locationX, double locationY) {
-		this.locationX = locationX;
-		this.locationY = locationY;
-	}
-	public void setLocationX(double locationX) { this.locationX = locationX; }
-	public void setLocationY(double locationY) { this.locationY = locationY; }
-	public void adjustLocation(double locationX, double locationY) {
-		this.locationX += locationX;
-		this.locationY += locationY;
-	}
-	public void adjustLocation(Vector2D velocity) {
-		this.locationX += velocity.getComponentX();
-		this.locationY += velocity.getComponentY();
-	}
+	public double getLocationX() { return location.getX(); }
+	public double getLocationY() { return location.getY(); }
+	public Location getLocation() { return location; }
+
+	public void setLocationX(double locationX) { location.setX(locationX); }
+	public void setLocationY(double locationY) { location.setY(locationY); }
+	public void setLocation(Location location) { this.location = location; }
+	public void setLocation(double locationX, double locationY) { location.setLocation(locationX, locationY); }
+
+	public void adjustLocation(double deltaX, double deltaY) { location.adjustLocation(deltaX, deltaY); }
+	public void adjustLocation(Vector2D velocity) { location.adjustLocation(velocity); }
 
 	// EXTRAS
 	public double getMass() { return mass; }

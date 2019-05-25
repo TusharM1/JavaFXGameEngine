@@ -1,5 +1,7 @@
 package CoreEngine.GameObjects;
 
+import CoreEngine.Dimension;
+import CoreEngine.Location;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.transform.Affine;
@@ -10,14 +12,25 @@ public class EllipseGameObject extends GameObject {
 	private Ellipse hitBox;
 	private Color color;
 
-	private double centerX, centerY,
-					radiusX, radiusY,
-					diameterX, diameterY;
+//	private double centerX, centerY,
+//					radiusX, radiusY,
+//					diameterX, diameterY;
 
-	public EllipseGameObject(double centerX, double centerY, double radiusX, double radiusY) {
-		setCenter(centerX, centerY);
+	private Dimension dimension;
+
+	public EllipseGameObject(Location location, Dimension dimension) {
+		if (dimension != null)
+			setRadius(dimension);
+		else
+			setRadius(new Dimension(100, 100));
+		if (location != null) ;
+			setCenter(location);
+		else
+			setCenter(getGameEngine().getWidth() / 2 - radiusX, getGameEngine().getHeight() / 2 - radiusY, radiusX, radiusY);
+//		setCenter(centerX, centerY);
 		setRadius(radiusX, radiusY);
 		setLocation(centerX - radiusX, centerY - radiusY);
+		// Check if this is the correct hit box (it doesn't seem like it)
 		setHitBox(new Ellipse(centerX, centerY, radiusX, radiusY));
 		setColor(Color.WHITE);
 		setObjectType("EllipseGameObject");
@@ -26,6 +39,21 @@ public class EllipseGameObject extends GameObject {
 	public EllipseGameObject(double radiusX, double radiusY) {
 		this(getGameEngine().getWidth() / 2 - radiusX, getGameEngine().getHeight() / 2 - radiusY, radiusX, radiusY);
 	}
+
+
+//	public EllipseGameObject(double centerX, double centerY, double radiusX, double radiusY) {
+//		setCenter(centerX, centerY);
+//		setRadius(radiusX, radiusY);
+//		setLocation(centerX - radiusX, centerY - radiusY);
+//		// Check if this is the correct hit box (it doesn't seem like it)
+//		setHitBox(new Ellipse(centerX, centerY, radiusX, radiusY));
+//		setColor(Color.WHITE);
+//		setObjectType("EllipseGameObject");
+//	}
+//
+//	public EllipseGameObject(double radiusX, double radiusY) {
+//		this(getGameEngine().getWidth() / 2 - radiusX, getGameEngine().getHeight() / 2 - radiusY, radiusX, radiusY);
+//	}
 
 	@Override
 	public void update() {

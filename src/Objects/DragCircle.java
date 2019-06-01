@@ -1,6 +1,8 @@
 package Objects;
 
+import CoreEngine.Dimension;
 import CoreEngine.GameObjects.EllipseGameObject;
+import CoreEngine.Location;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -12,8 +14,8 @@ public class DragCircle extends EllipseGameObject {
 	double cursorInShapeX, cursorInShapeY;
 	boolean selectedState;
 
-	public DragCircle(double centerX, double centerY, double radiusX, double radiusY) {
-		super(centerX, centerY, radiusX, radiusY);
+	public DragCircle(Location location, Dimension dimension) {
+		super(location, dimension);
 		setColor(Color.valueOf("#FFa500FF"));
 		setObjectName("DragCircle");
 	}

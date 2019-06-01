@@ -1,13 +1,15 @@
 package Objects;
 
+import CoreEngine.Dimension;
 import CoreEngine.GameObjects.EllipseGameObject;
+import CoreEngine.Location;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 public class FloatingBall extends EllipseGameObject {
 
-	public FloatingBall(double centerX, double centerY, double radiusX, double radiusY) {
-		super(centerX, centerY, radiusX, radiusY);
+	public FloatingBall(Location location, Dimension dimension) {
+		super(location, dimension);
 		setColor(Color.valueOf("#2FA9FFFF"));
 		setMaximumVelocity(5);
 		setFriction(0.02);

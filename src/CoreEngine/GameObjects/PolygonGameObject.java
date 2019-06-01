@@ -1,5 +1,6 @@
 package CoreEngine.GameObjects;
 
+import CoreEngine.Location;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
@@ -13,7 +14,9 @@ public class PolygonGameObject extends GameObject {
 	private Polygon hitBox;
 	private Color color;
 
-	private double centerX, centerY;
+	private Location center;
+
+//	private double centerX, centerY;
 	private double lastLocationX, lastLocationY, lastRotation;
 	
 	private double[] xPoints, yPoints, allPoints;
@@ -22,9 +25,15 @@ public class PolygonGameObject extends GameObject {
 	private Translate shapeTranslation;
 	private Rotate shapeRotation;
 
-	public PolygonGameObject(double locationX, double locationY, double[][] points, double centerX, double centerY) {
-		setLocation(locationX, locationY);
-		setCenter(centerX, centerY);
+	public PolygonGameObject(Location location, Location center, double[][] points) {
+		if (location != null)
+			setLocation(location);
+		else
+			this.location = new Location(getGameEngine().getWidth() / 2, getGameEngine().getHeight() / 2);
+		if (center != null)
+			setCenter(center);
+		else
+			this.center = new Location(0, 0);
 
 		xPoints = Arrays.stream(points).map(doubles -> doubles[0]).mapToDouble(Double::doubleValue).toArray();
 		yPoints = Arrays.stream(points).map(doubles -> doubles[1]).mapToDouble(Double::doubleValue).toArray();
@@ -34,8 +43,8 @@ public class PolygonGameObject extends GameObject {
 
 		setHitBox(new Polygon(allPoints));
 
-		shapeTranslation = new Translate(locationX, locationY);
-		shapeRotation = new Rotate(getRotation(), centerX, centerY);
+		shapeTranslation = new Translate(getLocationX(), getLocationY());
+		shapeRotation = new Rotate(getRotation(), getCenterX(), getCenterY());
 
 		hitBox.getTransforms().addAll(shapeTranslation, shapeRotation);
 
@@ -48,7 +57,7 @@ public class PolygonGameObject extends GameObject {
 		super.update();
 
 		Translate translate = new Translate(getLocationX() - lastLocationX, getLocationY() - lastLocationY);
-		Rotate rotate = new Rotate(getRotation() - lastRotation, getLocationX() + centerX, getLocationY() + centerY);
+		Rotate rotate = new Rotate(getRotation() - lastRotation, getLocationX() + getCenterX(), getLocationY() + getCenterY());
 
 		shapeTranslation.setX(getLocationX());
 		shapeTranslation.setY(getLocationY());
@@ -81,14 +90,13 @@ public class PolygonGameObject extends GameObject {
 	public Color getColor() { return color; }
 	public void setColor(Color color) { this.color = color; }
 
-	public double getCenterX() { return centerX; }
-	public void setCenterX(double centerX) { this.centerX = centerX; }
-	public double getCenterY() { return centerY; }
-	public void setCenterY(double centerY) { this.centerY = centerY; }
-	public void setCenter(double centerX, double centerY) {
-		this.centerX = centerX;
-		this.centerY = centerY;
-	}
+	public double getCenterX() { return center.getX(); }
+	public void setCenterX(double centerX) { this.center.setX(centerX); }
+	public double getCenterY() { return center.getY(); }
+	public void setCenterY(double centerY) { this.center.setY(centerY); }
+
+	public void setCenter(Location center) { this.center.setLocation(center); }
+	public void setCenter(double centerX, double centerY) { this.center.setLocation(centerX, centerY); }
 
 //	public double getLastLocationX() { return lastLocationX; }
 //	public void setLastLocationX(double lastLocationX) { this.lastLocationX = lastLocationX; }

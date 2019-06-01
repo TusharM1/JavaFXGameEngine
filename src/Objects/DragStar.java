@@ -1,6 +1,7 @@
 package Objects;
 
 import CoreEngine.GameObjects.PolygonGameObject;
+import CoreEngine.Location;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -12,8 +13,8 @@ public class DragStar extends PolygonGameObject {
 	double cursorInShapeX, cursorInShapeY;
 	boolean selectedState;
 
-	public DragStar(double locationX, double locationY, double[][] points, double centerX, double centerY) {
-		super(locationX, locationY, points, centerX, centerY);
+	public DragStar(Location location, Location center, double[][] points) {
+		super(location, center, points);
 		setColor(Color.valueOf("#2FA9FFFF"));
 		setObjectName("DragStar");
 	}

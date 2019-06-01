@@ -31,9 +31,9 @@ public class DragShapesTest extends Application implements IGameLoop {
 
 	@Override
 	public void start(Stage primaryStage) {
-		dragStar = new DragStar(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, -75);
-		dragSquare = new DragSquare(200, 200, 100, 100);
-		dragCircle = new DragCircle(300, 300, 50, 50);
+//		dragStar = new DragStar(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, -75);
+//		dragSquare = new DragSquare(200, 200, 100, 100);
+//		dragCircle = new DragCircle(300, 300, 50, 50);
 
 		renderQueue.add(dragStar);
 		renderQueue.add(dragSquare);

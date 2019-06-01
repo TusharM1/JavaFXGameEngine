@@ -177,8 +177,10 @@ public abstract class GameObject {
 	public static GraphicsContext getGraphicsContext() { return gameEngine.getGraphicsContext(); }
 	public static Canvas getCanvas() { return gameEngine.getCanvas(); }
 
-	public double getCenterInCanvasX() { return getCanvas().getWidth() / 2; }
-	public double getCenterInCanvasY() { return getCanvas().getHeight() / 2; }
+//	TODO maybe separate out the rotation point and location
+
+//	public double getCenterInCanvasX() { return getCanvas().getWidth() / 2; }
+//	public double getCenterInCanvasY() { return getCanvas().getHeight() / 2; }
 
 	public String getObjectName() { return objectName; }
 	public void setObjectName(String objectName) { this.objectName = objectName; }

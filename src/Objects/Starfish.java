@@ -1,13 +1,14 @@
 package Objects;
 
 import CoreEngine.GameObjects.PolygonGameObject;
+import CoreEngine.Location;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 public class Starfish extends PolygonGameObject {
 
-	public Starfish(double locationX, double locationY, double[][] points, double centerX, double centerY) {
-		super(locationX, locationY, points, centerX, centerY);
+	public Starfish(Location location, Location center, double[][] points) {
+		super(location, center, points);
 		setColor(Color.valueOf("#2FA9FFFF"));
 		setMaximumVelocity(7.5);
 		setFriction(0.02);

@@ -1,6 +1,8 @@
 package Objects;
 
+import CoreEngine.Dimension;
 import CoreEngine.GameObjects.RectangleGameObject;
+import CoreEngine.Location;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
@@ -17,13 +19,8 @@ public class SpaceShip extends RectangleGameObject {
 //		this((getGameEngine().getWidth() - width) / 2, (getGameEngine().getHeight() - height) / 2, width, height);
 //	}
 
-	public SpaceShip(double locationX, double locationY, double width, double height) {
-		super(width, height);
-		setLocation(locationX, locationY);
-	}
-
-	public SpaceShip(double width, double height) {
-		super(width, height);
+	public SpaceShip(Location location, Dimension dimension) {
+		super(location, dimension);
 		setColor(Color.valueOf("#2FA9FFFF"));
 		setMaximumVelocity(7.5);
 		setFriction(0.02);

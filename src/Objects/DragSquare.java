@@ -1,6 +1,8 @@
 package Objects;
 
+import CoreEngine.Dimension;
 import CoreEngine.GameObjects.RectangleGameObject;
+import CoreEngine.Location;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -12,8 +14,8 @@ public class DragSquare extends RectangleGameObject {
 	double cursorInShapeX, cursorInShapeY;
 	boolean selectedState;
 
-	public DragSquare(double locationX, double locationY, double width, double height) {
-		super(locationX, locationY, width, height);
+	public DragSquare(Location location, Dimension dimension) {
+		super(location, dimension);
 		setColor(Color.valueOf("#FFa500FF"));
 		setObjectName("DragSquare");
 	}

@@ -1,12 +1,9 @@
 import CoreEngine.GameEngine;
-import CoreEngine.GameObjects.GameObject;
 import CoreEngine.IGameLoop;
 import CoreEngine.Layer;
-import Objects.DragCircle;
-import Objects.SpaceShip;
+import Objects.*;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 // TODO Make multithreaded and add server functionality, add key listeners for individual keys - especially for the mouse
@@ -46,7 +43,7 @@ public class Main extends Application implements IGameLoop {
 //		renderQueue.add(new DragSquare(200, 200, 100, 100));
 //		renderQueue.add(new DragStar(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, -75));
 
-		gameEngine.addLayer(new Layer(new SpaceShip(100, 100)));
+		gameEngine.addLayer(new Layer(new GravityBall(null, null)));
 //		gameEngine.addLayer(new Layer(new DragCircle(150, 50)));
 
         primaryStage.setTitle("Game Engine");

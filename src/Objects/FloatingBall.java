@@ -17,8 +17,8 @@ public class FloatingBall extends EllipseGameObject {
 
 	@Override
 	public void update() {
-		setAcceleration((getGameEngine().getKeyboard()[KeyCode.RIGHT.getCode()] ? .1 : 0) + (getGameEngine().getKeyboard()[KeyCode.LEFT.getCode()] ? -.1 : 0),
-				(getGameEngine().getKeyboard()[KeyCode.UP.getCode()] ? -.1 : 0) + (getGameEngine().getKeyboard()[KeyCode.DOWN.getCode()] ? .1 : 0), 0);
+		setAcceleration((getGameEngine().getKeyboard()[KeyCode.A.getCode()] ? .1 : 0) + (getGameEngine().getKeyboard()[KeyCode.D.getCode()] ? -.1 : 0),
+				(getGameEngine().getKeyboard()[KeyCode.W.getCode()] ? -.1 : 0) + (getGameEngine().getKeyboard()[KeyCode.S.getCode()] ? .1 : 0), 0);
 //		setVelocity((getGameEngine().getKeyboard()[KeyCode.RIGHT.getCode()] ? 5 : 0) + (getGameEngine().getKeyboard()[KeyCode.LEFT.getCode()] ? -5 : 0),
 //		(getGameEngine().getKeyboard()[KeyCode.UP.getCode()] ? -5 : 0) + (getGameEngine().getKeyboard()[KeyCode.DOWN.getCode()] ? 5 : 0), 0);
 

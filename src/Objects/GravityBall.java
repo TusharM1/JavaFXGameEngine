@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 
 public class GravityBall extends EllipseGameObject {
 
-//	public GravityBall(double centerX, double centerY, double radiusX, double radiusY) {
 	public GravityBall(Location location, Dimension dimension) {
 		super(location, dimension);
 		setColor(Color.valueOf("#2FA9FFFF"));

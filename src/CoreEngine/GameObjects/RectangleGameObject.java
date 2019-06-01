@@ -15,8 +15,6 @@ public class RectangleGameObject extends GameObject {
 
 	private Dimension dimension;
 
-//	private double width, height, widthCenter, heightCenter;
-
 	public RectangleGameObject(Location location, Dimension dimension) {
 		if (dimension != null)
 			setSize(dimension);
@@ -24,8 +22,6 @@ public class RectangleGameObject extends GameObject {
 			this.dimension = new Dimension(100, 100);
 		if (location != null)
 			setLocation(location);
-		else
-			this.location = new Location(getGameEngine().getWidth() / 2, getGameEngine().getHeight() / 2);
 		setColor(Color.WHITE);
 		setHitBox(new Rectangle(getLocationX() - getWidth() / 2, getLocationY() - getHeight() / 2, getWidth(), getHeight()));
 		setObjectType("RectangleGameObject");
@@ -35,8 +31,8 @@ public class RectangleGameObject extends GameObject {
 	public void update() {
 		super.update();
 
-		getHitBox().setX(getLocationX());
-		getHitBox().setY(getLocationY());
+		getHitBox().setX(getLocationX() - getWidth() / 2);
+		getHitBox().setY(getLocationY() - getHeight() / 2);
 		getHitBox().setRotate(getRotation());
 	}
 
@@ -59,6 +55,12 @@ public class RectangleGameObject extends GameObject {
 
 	@Override
 	public Rectangle getHitBox() { return hitBox; }
+
+	@Override public void onIntersectTopBound() { }
+	@Override public void onIntersectBottomBound() { }
+	@Override public void onIntersectLeftBound() { }
+	@Override public void onIntersectRightBound() { }
+
 	public void setHitBox(Rectangle hitBox) { this.hitBox = hitBox; }
 
 	public Color getColor() { return color; }
@@ -66,8 +68,6 @@ public class RectangleGameObject extends GameObject {
 
 	public double getWidth() { return dimension.getWidth(); }
 	public double getHeight() { return dimension.getHeight(); }
-
-//	public Dimension getSize() { return this.dimension; }
 
 	public void setWidth(double width) { dimension.setWidth(width); }
 	public void setHeight(double height) { dimension.setHeight(height); }

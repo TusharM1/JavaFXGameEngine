@@ -20,6 +20,11 @@ public class DragCircle extends EllipseGameObject {
 		setObjectName("DragCircle");
 	}
 
+	public boolean inTheWindow() {
+		return getHitBox().getBoundsInParent().intersects(getCanvas().getLayoutBounds())
+				|| getCanvas().getLayoutBounds().contains(getHitBox().getBoundsInParent());
+	}
+
 	@Override
 	public void update() {
 		setRotationSpeed((getGameEngine().getKeyboard()[KeyCode.LEFT.getCode()] ? -2 : 0) + (getGameEngine().getKeyboard()[KeyCode.RIGHT.getCode()] ? 2 : 0));
@@ -38,6 +43,17 @@ public class DragCircle extends EllipseGameObject {
 			if (!mouseEvent.isPrimaryButtonDown())
 				selectedState = false;
 		}
+
+//		System.out.println(!Shape.intersect(getGameEngine().bottomBound, getHitBox()).getBoundsInParent().isEmpty());
+
+		if (intersectsTopBound())
+			System.out.println("Top");
+		if (intersectsBottomBound())
+			System.out.println("Bottom");
+		if (intersectsLeftBound())
+			System.out.println("Left");
+		if (intersectsRightBound())
+			System.out.println("Right");
 
 		super.update();
 	}

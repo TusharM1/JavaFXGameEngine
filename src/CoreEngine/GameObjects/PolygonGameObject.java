@@ -16,7 +16,6 @@ public class PolygonGameObject extends GameObject {
 
 	private Location center;
 
-//	private double centerX, centerY;
 	private double lastLocationX, lastLocationY, lastRotation;
 	
 	private double[] xPoints, yPoints, allPoints;
@@ -28,11 +27,10 @@ public class PolygonGameObject extends GameObject {
 	public PolygonGameObject(Location location, Location center, double[][] points) {
 		if (location != null)
 			setLocation(location);
-		else
-			this.location = new Location(getGameEngine().getWidth() / 2, getGameEngine().getHeight() / 2);
 		if (center != null)
 			setCenter(center);
 		else
+			// This location is relative to the object, not the canvas
 			this.center = new Location(0, 0);
 
 		xPoints = Arrays.stream(points).map(doubles -> doubles[0]).mapToDouble(Double::doubleValue).toArray();
@@ -85,6 +83,12 @@ public class PolygonGameObject extends GameObject {
 
 	@Override
 	public Polygon getHitBox() { return hitBox; }
+
+	@Override public void onIntersectTopBound() { }
+	@Override public void onIntersectBottomBound() { }
+	@Override public void onIntersectLeftBound() { }
+	@Override public void onIntersectRightBound() { }
+
 	public void setHitBox(Polygon hitBox) { this.hitBox = hitBox; }
 
 	public Color getColor() { return color; }
@@ -97,6 +101,8 @@ public class PolygonGameObject extends GameObject {
 
 	public void setCenter(Location center) { this.center.setLocation(center); }
 	public void setCenter(double centerX, double centerY) { this.center.setLocation(centerX, centerY); }
+
+//	public int getNumberOfPoints() { return numberOfPoints; }
 
 //	public double getLastLocationX() { return lastLocationX; }
 //	public void setLastLocationX(double lastLocationX) { this.lastLocationX = lastLocationX; }
@@ -111,8 +117,6 @@ public class PolygonGameObject extends GameObject {
 //	public void setyPoints(double[] yPoints) { this.yPoints = yPoints; }
 //	public double[] getAllPoints() { return allPoints; }
 //	public void setAllPoints(double[] allPoints) { this.allPoints = allPoints; }
-
-	public int getNumberOfPoints() { return numberOfPoints; }
 
 //	public Translate getShapeTranslation() { return shapeTranslation; }
 //	public void setShapeTranslation(Translate shapeTranslation) { this.shapeTranslation = shapeTranslation; }

@@ -28,4 +28,24 @@ public class PathGameObject extends GameObject {
 	public Shape getHitBox() {
 		return hitBox;
 	}
+
+	@Override
+	public void onIntersectTopBound() {
+
+	}
+
+	@Override
+	public void onIntersectBottomBound() {
+
+	}
+
+	@Override
+	public void onIntersectLeftBound() {
+
+	}
+
+	@Override
+	public void onIntersectRightBound() {
+
+	}
 }

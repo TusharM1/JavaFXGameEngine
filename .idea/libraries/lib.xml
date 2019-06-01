@@ -9,6 +9,13 @@
     </NATIVE>
     <SOURCES>
       <root url="file://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib" />
+      <root url="jar://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib/src.zip!/javafx.base" />
+      <root url="jar://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib/src.zip!/javafx.controls" />
+      <root url="jar://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib/src.zip!/javafx.fxml" />
+      <root url="jar://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib/src.zip!/javafx.graphics" />
+      <root url="jar://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib/src.zip!/javafx.media" />
+      <root url="jar://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib/src.zip!/javafx.swing" />
+      <root url="jar://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib/src.zip!/javafx.web" />
     </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/../Libraries/javafx-sdk-12.0.1/lib" recursive="false" type="SOURCES" />

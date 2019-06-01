@@ -36,6 +36,7 @@ public abstract class GameObject {
 
 	public GameObject() {
 		// Initialize Vectors
+
 		acceleration = new Vector2D();
 		friction = new Vector2D();
 		maximumVelocity = new Vector2D();
@@ -77,11 +78,38 @@ public abstract class GameObject {
 			velocity.setMagnitude(0);
 
 		// Caps Velocity to Max Velocity
-		if (Math.abs(velocity.getMagnitude()) > Math.abs(maximumVelocity.getMagnitude()))
-			velocity.setMagnitude(maximumVelocity.getMagnitude());
+		if (maximumVelocity.getMagnitude() >= 0)
+			if (Math.abs(velocity.getMagnitude()) > maximumVelocity.getMagnitude())
+				velocity.setMagnitude(maximumVelocity.getMagnitude());
 
 		// Updates Location based on Velocity
 		adjustLocation(velocity);
+//		while (intersectsBottomBound())
+//			adjustLocation(0, -100);
+
+//		// This is really inefficient if nothing happens on the intersects
+//		// This is also called for every frame, maybe add lambda expressions for this one.
+//		if (intersectsTopBound())
+//			onIntersectTopBound();
+//		if (intersectsBottomBound())
+//			onIntersectBottomBound();
+//		if (intersectsLeftBound())
+//			onIntersectLeftBound();
+//		if (intersectsRightBound())
+//			onIntersectRightBound();
+	}
+
+	public void resolveCollisions() {
+		// This is really inefficient if nothing happens on the intersects
+		// This is also called for every frame, maybe add lambda expressions for this one.
+		if (intersectsTopBound())
+			onIntersectTopBound();
+		if (intersectsBottomBound())
+			onIntersectBottomBound();
+		if (intersectsLeftBound())
+			onIntersectLeftBound();
+		if (intersectsRightBound())
+			onIntersectRightBound();
 	}
 
 	public final void draw() {
@@ -116,6 +144,7 @@ public abstract class GameObject {
 	// ACCELERATION
 	public double getAccelerationX() { return acceleration.getComponentX(); }
 	public double getAccelerationY() { return acceleration.getComponentY(); }
+//	public Vector2D getAcceleration() { return acceleration; }
 	public void setAcceleration(double accelerationX, double accelerationY, double offset) { this.acceleration.setCartesianCoordinates(accelerationX, accelerationY, offset); }
 	public void setAcceleration(double acceleration, double angle) { this.acceleration.setPolarCoordinates(acceleration, angle); }
 	public void setAcceleration(double acceleration) { this.acceleration.setMagnitude(acceleration); }
@@ -125,6 +154,7 @@ public abstract class GameObject {
 	// VELOCITY
 	public double getVelocityX() { return velocity.getComponentX(); }
 	public double getVelocityY() { return velocity.getComponentY(); }
+//	public Vector2D getVelocity() { return velocity; }
 	public void setVelocity(double velocityX, double velocityY, double offset) { this.velocity.setCartesianCoordinates(velocityX, velocityY, offset); }
 	public void setVelocity(double velocity, double angle) { this.velocity.setPolarCoordinates(velocity, angle); }
 	public void setVelocity(double velocity) { this.velocity.setMagnitude(velocity); }
@@ -134,6 +164,7 @@ public abstract class GameObject {
 	// FRICTION
 	public double getFrictionX() { return friction.getComponentX(); }
 	public double getFrictionY() { return friction.getComponentY(); }
+//	public Vector2D getFriction() { return friction; }
 	public void setFriction(double frictionX, double frictionY, double offset) { this.friction.setCartesianCoordinates(frictionX, frictionY, offset); }
 	public void setFriction(double friction, double angle) { this.friction.setPolarCoordinates(friction, angle); }
 	public void setFriction(double friction) { this.friction.setMagnitude(friction); }
@@ -143,6 +174,7 @@ public abstract class GameObject {
 	// MAX VELOCITY
 	public double getMaximumVelocityX() { return maximumVelocity.getComponentX(); }
 	public double getMaximumVelocityY() { return maximumVelocity.getComponentY(); }
+//	public Vector2D getMaximumVelocity() { return maximumVelocity; }
 	public void setMaximumVelocity(double maximumVelocityX, double maximumVelocityY, double offset) { this.maximumVelocity.setCartesianCoordinates(maximumVelocityX, maximumVelocityY, offset); }
 	public void setMaximumVelocity(double maximumVelocity, double angle) { this.maximumVelocity.setPolarCoordinates(maximumVelocity, angle); }
 	public void setMaximumVelocity(double maximumVelocity) { this.maximumVelocity.setMagnitude(maximumVelocity); }
@@ -179,16 +211,33 @@ public abstract class GameObject {
 
 //	TODO maybe separate out the rotation point and location
 
-//	public double getCenterInCanvasX() { return getCanvas().getWidth() / 2; }
-//	public double getCenterInCanvasY() { return getCanvas().getHeight() / 2; }
-
 	public String getObjectName() { return objectName; }
 	public void setObjectName(String objectName) { this.objectName = objectName; }
 	public String getObjectType() { return objectType; }
 	public void setObjectType(String objectType) { this.objectType = objectType; }
 
+	public boolean intersectsTopBound() {
+		return !Shape.intersect(getGameEngine().getTopBound(), getHitBox()).getBoundsInParent().isEmpty();
+	}
+
+	public boolean intersectsBottomBound() {
+		return !Shape.intersect(getGameEngine().getBottomBound(), getHitBox()).getBoundsInParent().isEmpty();
+	}
+
+	public boolean intersectsLeftBound() {
+		return !Shape.intersect(getGameEngine().getLeftBound(), getHitBox()).getBoundsInParent().isEmpty();
+	}
+
+	public boolean intersectsRightBound() {
+		return !Shape.intersect(getGameEngine().getRightBound(), getHitBox()).getBoundsInParent().isEmpty();
+	}
+
+	public abstract void onIntersectTopBound();
+	public abstract void onIntersectBottomBound();
+	public abstract void onIntersectLeftBound();
+	public abstract void onIntersectRightBound();
+
 	public static boolean intersects(GameObject gameObject1, GameObject gameObject2) {
-//		return ((Path) Shape.intersect(gameObject1.getHitBox(), gameObject2.getHitBox())).getElements().size() > 0;
 		return !Shape.intersect(gameObject1.getHitBox(), gameObject2.getHitBox()).getBoundsInParent().isEmpty();
 	}
 

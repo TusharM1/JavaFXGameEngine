@@ -11,22 +11,12 @@ import javafx.stage.Stage;
 public class Main extends Application implements IGameLoop {
 
 	GameEngine gameEngine;
-//	ArrayList<GameObject> renderQueue;
-
-//	Layer gameObjects;
-
-//	ArrayList<Layer> layers;
 
 	@Override
 	public void init() throws Exception {
 		super.init();
 
 		gameEngine = new GameEngine(this, 640, 480);
-//		gameEngine.addLayer(new Layer());
-
-//		layers = new ArrayList<>();
-
-//		renderQueue = gameEngine.getRenderQueue();
 	}
 
 	@Override
@@ -43,8 +33,14 @@ public class Main extends Application implements IGameLoop {
 //		renderQueue.add(new DragSquare(200, 200, 100, 100));
 //		renderQueue.add(new DragStar(200, 200, new double[][]{{0, -75}, {25, -25}, {75, 0}, {25, 25}, {0, 75}, {-25, 25}, {-75, 0}, {-25, -25}}, 0, -75));
 
-		gameEngine.addLayer(new Layer(new GravityBall(null, null)));
-//		gameEngine.addLayer(new Layer(new DragCircle(150, 50)));
+		Layer layer = new Layer();
+		layer.add(new BouncingBall(null, null));
+
+//		Layer layer2 = new Layer();
+//		layer2.add(new FloatingBall(null, null));
+
+		gameEngine.addLayer(layer);
+//		gameEngine.addLayer(layer2);
 
         primaryStage.setTitle("Game Engine");
         primaryStage.setScene(gameEngine.getScene());

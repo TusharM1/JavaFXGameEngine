@@ -8,17 +8,6 @@ import javafx.scene.paint.Color;
 
 public class SpaceShip extends RectangleGameObject {
 
-//	public SpaceShip(double locationX, double locationY, double width, double height) {
-//		super(locationX, locationY, width, height);
-//		setColor(Color.valueOf("#2FA9FFFF"));
-//		setMaximumVelocity(7.5);
-//		setFriction(0.02);
-//	}
-//
-//	public SpaceShip(double width, double height) {
-//		this((getGameEngine().getWidth() - width) / 2, (getGameEngine().getHeight() - height) / 2, width, height);
-//	}
-
 	public SpaceShip(Location location, Dimension dimension) {
 		super(location, dimension);
 		setColor(Color.valueOf("#2FA9FFFF"));

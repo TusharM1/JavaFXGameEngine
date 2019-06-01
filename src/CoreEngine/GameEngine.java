@@ -36,6 +36,9 @@ public class GameEngine {
 	private MouseEvent mouse;
 	private Rectangle mouseHitBox;
 
+	// Canvas Bounds
+	public Rectangle topBound, bottomBound, leftBound, rightBound;
+
 	public GameEngine(IGameLoop game, double width, double height) {
 		this.game = game;
 		this.width = width;
@@ -61,10 +64,16 @@ public class GameEngine {
 		scene.widthProperty().addListener((observable, oldValue, newValue) -> {
 			this.width = newValue.doubleValue();
 			canvas.setWidth(this.width);
+			topBound.setWidth(this.width);
+			bottomBound.setWidth(this.width);
+			rightBound.setX(this.width);
 		});
 		scene.heightProperty().addListener((observable, oldValue, newValue) -> {
 			this.height = newValue.doubleValue();
 			canvas.setHeight(this.height);
+			bottomBound.setY(this.height);
+			leftBound.setHeight(this.height);
+			rightBound.setHeight(this.height);
 		});
 
 		scene.addEventHandler(KeyEvent.ANY, event -> keyboard[event.getCode().getCode()] = event.getEventType().getName().equals("KEY_PRESSED"));
@@ -73,6 +82,22 @@ public class GameEngine {
 			mouseHitBox.setX(event.getX());
 			mouseHitBox.setY(event.getY());
 		});
+
+		topBound = new Rectangle(canvas.getWidth(), 1);
+		topBound.setX(0);
+		topBound.setY(-1);
+
+		bottomBound = new Rectangle(canvas.getWidth(), 1);
+		bottomBound.setX(0);
+		bottomBound.setY(canvas.getHeight());
+
+		leftBound = new Rectangle(1, canvas.getHeight());
+		leftBound.setX(-1);
+		leftBound.setY(0);
+
+		rightBound = new Rectangle(1, canvas.getHeight());
+		rightBound.setX(canvas.getWidth());
+		rightBound.setY(0);
 
 		GameObject.setGameEngine(this);
 	}
@@ -147,5 +172,10 @@ public class GameEngine {
 
 	public Rectangle getMouseHitBox() { return mouseHitBox; }
 	public void setMouseHitBox(Rectangle mouseHitBox) { this.mouseHitBox = mouseHitBox; }
+
+	public Rectangle getTopBound() { return topBound; }
+	public Rectangle getBottomBound() { return bottomBound; }
+	public Rectangle getLeftBound() { return leftBound; }
+	public Rectangle getRightBound() { return rightBound; }
 
 }
